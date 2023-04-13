@@ -1,10 +1,10 @@
 
 import Index from './Components/Index';
-
+import Registro from './Components/Registro';
 function App() {
   return (
     
-    <Index></Index>
+    <Registro></Registro>
   );
 }
 

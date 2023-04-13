@@ -6,7 +6,10 @@ import Header from './Header';
 function Index() {
   return (
     <div>
-      <Header></Header>
+      <Header
+      texto1="Bienvenido a"
+      texto2="Adoptme"
+      />
       <BodyIndex></BodyIndex>
       <FooterIndex></FooterIndex>
     </div>
