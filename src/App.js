@@ -4,7 +4,7 @@ import Mipanel from './Components/Mipanel';
 import React, {useState} from 'react';
 import {Button, Card, Dropdown} from 'react-bootstrap/';
 import perro1 from './istock.jpg'
-
+import Registro from './Components/Registro';
 function App() {
 
   //------------------------------Para ingresar, eliminar y modificar una mascota (Mipanel)
@@ -114,7 +114,9 @@ function App() {
       selectedOption={selectedOption}
 
       />
+      <Registro></Registro>
     </div>
+    
     
   );
 }

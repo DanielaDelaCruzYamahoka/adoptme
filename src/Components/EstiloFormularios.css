@@ -1,0 +1,40 @@
+.mainRegistro{
+	text-align: center;
+}
+
+.Formulario{
+	display:contents;
+	justify-content: center;
+	display: flex;
+	padding-bottom: 10rem;
+	font-size: 1.5rem;
+	padding-top: 10rem;
+}
+
+.Formulario form{
+	width: 50%;
+}
+
+.Formulario input{
+	font-size: 1.1rem;
+    
+}
+
+form .enviar{
+	margin-top: 2rem;
+	padding: 1rem 2rem 1rem 2rem;
+	font-size: 1.4rem;
+	color: white;
+	background-color: #FF6B6B;
+	text-decoration: none;
+	border: none;
+	border-radius: 2rem;
+	transition: all 0.2s ease;
+	cursor: pointer;
+}
+
+form .enviar:hover{
+	transition: all 0.2s ease;
+    color: #FF6B6B;
+	background-color: #F5F5F5;
+}
