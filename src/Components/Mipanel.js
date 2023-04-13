@@ -6,7 +6,7 @@ import perro1 from '../istock.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Mipanel(props){
-    const { manejoenvio , mascotas, setmascotas, lista, eliminar, modificar} = props;
+    const { manejoenvio , mascotas, setmascotas, lista, eliminar, modificar, guardarCambios} = props;
 
     return(
         
@@ -25,7 +25,7 @@ function Mipanel(props){
                             name="id"
                             id="id"
                             value={mascotas.id}
-                            onChange={e => setmascotas({...mascotas,id:e.target.value})}
+                            onChange={guardarCambios}
                             />
                         </Form.Group>
 
@@ -37,7 +37,7 @@ function Mipanel(props){
                             name="nombre"
                             id="nombre"
                             value={mascotas.nombre}
-                            onChange={e => setmascotas({...mascotas,nombre:e.target.value})}
+                            onChange={guardarCambios}
                             />
                         </Form.Group>
 
@@ -49,7 +49,7 @@ function Mipanel(props){
                             name="edad"
                             id="edad"
                             value={mascotas.edad}
-                            onChange={e => setmascotas({...mascotas,edad:e.target.value})}
+                            onChange={guardarCambios}
                             />
                         </Form.Group>
 
@@ -60,7 +60,8 @@ function Mipanel(props){
                             name="especie"
                             id="especie"
                             value={mascotas.especie}
-                            onChange={e => setmascotas({...mascotas,especie:e.target.value})}>
+                            onChange={guardarCambios}>
+                                <option value="seleccione">seleccione</option>
                                 <option value="perro">Perro</option>
                                 <option value="gato">Gato</option>
                                 <option value="reptil">Reptil</option>
@@ -79,7 +80,7 @@ function Mipanel(props){
                             name="tamaño"
                             id="tamaño"
                             value={mascotas.tamaño}
-                            onChange={e => setmascotas({...mascotas,tamaño:e.target.value})}
+                            onChange={guardarCambios}
                             />
                         </Form.Group>
 
@@ -91,7 +92,7 @@ function Mipanel(props){
                             name="raza"
                             id="raza"
                             value={mascotas.raza}
-                            onChange={e => setmascotas({...mascotas,raza:e.target.value})}
+                            onChange={guardarCambios}
                             />
                         </Form.Group>
 
@@ -103,7 +104,7 @@ function Mipanel(props){
                             name="descripcion"
                             id="descripcion"
                             value={mascotas.descripcion}
-                            onChange={e => setmascotas({...mascotas,descripcion:e.target.value})}
+                            onChange={guardarCambios}
                             />
                         </Form.Group>
 
@@ -143,8 +144,8 @@ function Mipanel(props){
                                 <td>{a.tamaño}</td>
                                 <td>{a.raza}</td>
                                 <td>{a.descripcion}</td>
-                                <td><Button variant="success" onClick={()=> modificar(index)}>Modificar</Button></td>
-                                <td><Button variant="danger"onClick={()=> eliminar(index)}>Eliminar</Button></td>
+                                <td><Button variant="success" onClick={()=> modificar(a.id)}>Modificar</Button></td>
+                                <td><Button variant="danger"onClick={()=> eliminar(a.id)}>Eliminar</Button></td>
                                 </tr>
                                 )
                             }

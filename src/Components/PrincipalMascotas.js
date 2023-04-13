@@ -26,7 +26,33 @@ function PrincipalMascotas() {
 
     e.preventDefault();
 
-    if(mascotas.id !==lista.id){
+    const {id, nombre, edad, especie, tamaño, raza, descripcion} = mascotas;
+
+    const vacios = (id.length===0 && nombre.length===0 && edad.length===0 && tamaño.length===0 && raza.length===0 && descripcion.length===0) || especie==="seleccione"
+
+    if(!vacios){
+        let temporal = lista;
+        temporal=temporal.filter(a=> a.id!==id)
+
+        setlista([
+            ...temporal, 
+            mascotas
+        ])
+    
+        setmascotas({
+            id:'',
+            nombre: '',
+            edad: '',
+            especie: '',
+            tamaño: '',
+            raza: '',
+            descripcion: '',
+        })
+    }
+
+
+
+ /*   if(mascotas.id !== lista.id){
       const nuevaMascota = {
         id: document.getElementById('id').value,
         nombre: document.getElementById('nombre').value,
@@ -46,36 +72,36 @@ function PrincipalMascotas() {
         raza: '',
         descripcion: '',
       });
-    }
-      
-    
+    }*/
   };
   
-  const eliminar =(index)=>{
-    const mascotaeliminar= lista[index]
-    const listatemporal=  lista.filter((a)=>a.nombre!==mascotaeliminar.nombre)
-    setlista(listatemporal)
+  const eliminar =(id)=>{
+    const temporal=  lista.filter((a)=>a.id!==id)
+    setlista(temporal)
+
+
   }
 
-  const modificar =(index)=>{
-    const mascotaAModificar = lista[index];
-    const listatemporall = lista.filter((a) => a.nombre !== mascotaAModificar.nombre);
+  const modificar =(id)=>{
+    const listatemporall = lista.find((a) => a.id === id);
     
-    // Crear un nuevo objeto temporal con los valores actualizados de la mascota
-    const mascotaModificada = {
-      id: mascotaAModificar.id,
-      nombre: mascotas.nombre,
-      edad: mascotas.edad,
-      especie: mascotas.especie,
-      tamaño: mascotas.tamaño,
-      raza: mascotas.raza,
-      descripcion: mascotas.descripcion,
-    };
-    
-    // Actualizar la lista con el objeto temporal en lugar de la mascota original
-    const nuevaLista = [...listatemporall, mascotaModificada];
-    setlista(nuevaLista);
-    
+    setmascotas({
+      id:listatemporall.id,
+      nombre: listatemporall.nombre,
+      edad: listatemporall.edad,
+      especie: listatemporall.especie,
+      tamaño: listatemporall.tamaño,
+      raza: listatemporall.raza,
+      descripcion: listatemporall.descripcion,
+    });
+
+  }
+
+  const guardarCambios=(e)=>{
+    setmascotas({
+        ...mascotas,
+        [e.target.name]: e.target.value
+    })
   }
 
   //------------------------------Para mostrar las mascotas (Mascotas)
@@ -106,6 +132,7 @@ function PrincipalMascotas() {
       lista={lista}
       eliminar={eliminar}
       modificar={modificar}
+      guardarCambios={guardarCambios}
       />
       <Mascotas
       lista={lista}
