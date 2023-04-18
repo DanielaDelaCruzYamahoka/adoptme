@@ -10,7 +10,7 @@ Ruta : su responsabilidad es representar la interfaz de usuario, cuando su ruta 
 Cambiar : representa la primera ruta secundaria o redirección que coincide con la ubicación.
 Redirigir : representa la nueva ubicación independientemente de la ubicación actual en la pila de historial
  */
-import { Link} from "react-router-dom";
+//import { Link} from "react-router-dom";
 
 
 

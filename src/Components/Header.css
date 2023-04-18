@@ -60,15 +60,21 @@ color: #FC7644;
 	justify-content: center;
 	text-align: center;
 	width: 100%;
-	background-color: #FFE66D;
+	
 	padding-bottom: 1rem;
 	padding-top: 1rem;
+	background-image: url("C:/Users/arace/Desktop/Web/adoptme/src/fondo.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-color: rgb(0, 0,0,0.6);
+	background-blend-mode: darken;
 }
 h1{
 	height: 0;
 	font-size: 8rem;
 	font-weight: 150;
-	color: #1A535C;
+	color: white;
 	margin-top: 6rem;
 }
 header h3{
@@ -77,12 +83,12 @@ header h3{
 	padding-right: 20rem;
 	font-size: 2rem;
 	font-weight: 150;
-	color: black;
+	color: white;
 }
 .Presentacion p{
 	font-size: 1.5rem;
 	font-weight: 150;
-	color: black;
+	color: white;
 	padding:  8rem 0rem 6rem 0rem;
 }
 .Presentacion a{
