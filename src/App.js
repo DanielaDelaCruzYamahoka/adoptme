@@ -3,12 +3,12 @@ import React, {useState} from 'react';
 import perro1 from './istock.jpg'
 import Registro from './Components/Registro';
 //import PrincipalMascotas from './Components/PrincipalMascotas';
-import InicioSesion from './Components/InicioSesion';
+import Index from './Components/Index';
 function App() {
 
   return (
     <div>
-      <InicioSesion/>
+      <Index/>
     </div>
   );
 }

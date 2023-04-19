@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PrincipalMascotas from './Components/PrincipalMascotas'
 import Registro from './Components/Registro'
 import Index from './Components/Index'
+import InicioSesion from './Components/InicioSesion'
 
 
 const router = createBrowserRouter([
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
   {
     path: '/registro',
     element: <Registro />,
+    errorElement: <h1>Error</h1>
+  },
+  {
+    path: '/InicioSesion',
+    element: <InicioSesion />,
     errorElement: <h1>Error</h1>
   },
   {
