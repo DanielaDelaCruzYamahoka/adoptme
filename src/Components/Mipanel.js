@@ -3,6 +3,7 @@ import {Button, Card, Dropdown, InputGroup, Form, Table} from 'react-bootstrap/'
 //import './Mipanel.css'
 import FooterIndex from './FooterIndex';
 import Header from './Header';
+import Navegacion from './Navegacion';
 import perro1 from '../istock.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -16,6 +17,8 @@ function Mipanel(props){
             texto1="Bienvenido"
             texto2="Mi Panel"
         />   
+        <Navegacion
+        etiqueta={<a>Aquí van los links de navegacion</a>}/>
             <Card>
                 <Card.Body>
                     <Card.Title>Ingresar Mascota</Card.Title>

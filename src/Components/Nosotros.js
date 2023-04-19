@@ -1,5 +1,6 @@
 import FooterIndex from './FooterIndex';
 import Header from './Header';
+import Navegacion from './Navegacion';
 
 function Nosotros() {
     return (
@@ -8,7 +9,8 @@ function Nosotros() {
         texto1="Bienvenido"
         texto2="Nosotros"
         />
-
+        <Navegacion
+        etiqueta={<a>Aquí van los links de navegacion</a>}/>
         <div className='informacion'>
 
             <h2>Misión</h2>

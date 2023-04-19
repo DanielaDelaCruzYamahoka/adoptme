@@ -1,5 +1,6 @@
 import FooterIndex from './FooterIndex';
 import Header from './Header';
+import Navegacion from './Navegacion';
 import chihuahua from '../chihuahua.png'
 import './EstiloFormularios.css'
 
@@ -10,7 +11,8 @@ function Contacto() {
         texto1="Bienvenido"
         texto2="Contacto"
         />
-
+        <Navegacion
+        etiqueta={<a>Aquí van los links de navegacion</a>}/>
         <main>
             <section className='Formulario'>
                 <form>
