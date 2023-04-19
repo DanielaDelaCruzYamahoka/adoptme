@@ -1,5 +1,6 @@
 import FooterIndex from './FooterIndex';
 import Header from './Header';
+import './Nosotros.css';
 
 function Nosotros() {
     return (

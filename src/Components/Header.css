@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap');
 /* Se importa la fuente y se integra en el cuerpo del componente */
 body {
 	font-family: 'Raleway';
