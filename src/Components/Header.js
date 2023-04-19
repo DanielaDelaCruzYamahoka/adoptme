@@ -7,7 +7,7 @@ function Header(props) {
   return (
     <section>
       <header className="navbar">
-        <Link to={"/"}>
+        <Link to={"/Index"}>
           <img className="logo" src={logodos} alt="logo" style={{backgroundColor: 'transparent'}}/>
         </Link>
 
@@ -25,6 +25,7 @@ function Header(props) {
 
       <section className="Presentacion">
         <h3>{props.texto1}</h3>
+        <br/>
         <h1>{props.texto2}</h1>
 
         <p>No compres la felicidad, adopta</p>

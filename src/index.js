@@ -16,6 +16,11 @@ import Adoptar from './Components/Adoptar'
 const router = createBrowserRouter([
   {
     path: '/',
+    element: <App />,
+    errorElement: <h1>Error</h1>
+  },
+  {
+    path: '/Index',
     element: <Index />,
     errorElement: <h1>Error</h1>
   },
