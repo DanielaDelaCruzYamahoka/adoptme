@@ -16,9 +16,9 @@ function Header(props) {
             Registrarme
           </Link>
           <Link to={"/InicioSesion"}>Iniciar sesión</Link>
-          <a href="Adoptar.html">Adoptar</a>
-          <a href="Nosotros.html">Sobre nosotros</a>
-          <a href="Contacto.html">Contacto</a>
+          <Link to={"/Adoptar"}>Adoptar</Link>
+          <Link to={"/Nosotros"}>Sobre nosotros</Link>
+          <Link to={"/Contacto"}>Contacto</Link>
           <Link to={"/Mipanel"}>Mi Panel</Link>
         </nav>
       </header>

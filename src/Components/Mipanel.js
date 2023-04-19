@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Card, Dropdown, InputGroup, Form, Table} from 'react-bootstrap/';
 //import './Mipanel.css'
 import FooterIndex from './FooterIndex';
+import Header from './Header';
 import perro1 from '../istock.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,7 +12,10 @@ function Mipanel(props){
     return(
         
         <div>
-            
+        <Header
+            texto1="Bienvenido"
+            texto2="Mi Panel"
+        />   
             <Card>
                 <Card.Body>
                     <Card.Title>Ingresar Mascota</Card.Title>
