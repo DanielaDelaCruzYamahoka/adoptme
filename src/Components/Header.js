@@ -1,6 +1,6 @@
 import React from "react";
 import "./Header.css";
-import logo from "../logoadoptme.png";
+import logodos from "../logodos.png";
 import { Link } from "react-router-dom";
 
 function Header(props) {
@@ -8,7 +8,7 @@ function Header(props) {
     <section>
       <header className="navbar">
         <Link to={"/"}>
-          <img className="logo" src={logo} alt="logo" />
+          <img className="logo" src={logodos} alt="logo" style={{backgroundColor: 'transparent'}}/>
         </Link>
 
         <nav className="Principal">

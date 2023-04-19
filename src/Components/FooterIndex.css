@@ -1,5 +1,8 @@
 footer{
-    background-color: #FFE66D;
+    background-color: #457B9D;
     display: flex;
     justify-content: center;
+}
+p{
+    color: #ffffff;
 }
