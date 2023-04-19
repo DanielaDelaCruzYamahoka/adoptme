@@ -4,6 +4,7 @@ import Mipanel from './Mipanel';
 import React, {useState} from 'react';
 import {Button, Card, Dropdown} from 'react-bootstrap/';
 import perro1 from '../istock.jpg'
+import Navegacion from './Navegacion';
 function PrincipalMascotas() {
 
   //------------------------------Para ingresar, eliminar y modificar una mascota (Mipanel)

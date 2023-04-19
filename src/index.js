@@ -8,6 +8,9 @@ import PrincipalMascotas from './Components/PrincipalMascotas'
 import Registro from './Components/Registro'
 import Index from './Components/Index'
 import InicioSesion from './Components/InicioSesion'
+import Nosotros from './Components/Nosotros'
+import Contacto from './Components/Contacto'
+import Adoptar from './Components/Adoptar'
 
 
 const router = createBrowserRouter([
@@ -24,6 +27,21 @@ const router = createBrowserRouter([
   {
     path: '/InicioSesion',
     element: <InicioSesion />,
+    errorElement: <h1>Error</h1>
+  },
+  {
+    path: '/Nosotros',
+    element: <Nosotros />,
+    errorElement: <h1>Error</h1>
+  },
+  {
+    path: '/Contacto',
+    element: <Contacto />,
+    errorElement: <h1>Error</h1>
+  },
+  {
+    path: '/Adoptar',
+    element: <Adoptar />,
     errorElement: <h1>Error</h1>
   },
   {
