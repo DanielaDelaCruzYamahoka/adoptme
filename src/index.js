@@ -3,11 +3,37 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import PrincipalMascotas from './Components/PrincipalMascotas'
+import Registro from './Components/Registro'
+import Index from './Components/Index'
+
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Index />,
+    errorElement: <h1>Error</h1>
+  },
+  {
+    path: '/registro',
+    element: <Registro />,
+    errorElement: <h1>Error</h1>
+  },
+  {
+    path: 'Mipanel',
+    element: <PrincipalMascotas />,
+    errorElement: <h1>Error</h1>
+  }
+  
+])
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}/>
+
   </React.StrictMode>
 );
 
