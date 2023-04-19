@@ -27,7 +27,7 @@ function Header(props) {
         <h3>{props.texto1}</h3>
         <br/>
         <h1>{props.texto2}</h1>
-
+        <br/>
         <p>No compres la felicidad, adopta</p>
       </section>
     </section>
