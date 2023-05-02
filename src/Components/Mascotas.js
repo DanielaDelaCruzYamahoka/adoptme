@@ -9,13 +9,15 @@ import { FirebaseContext } from '../Context/FirebaseContext';
 
 //cambie el color de blanco en negro en FooterIndex porque la descripcion de las tarjetas me las pone como blancas ANALIZAR
 function Mascotas() {
-  const { tarjetasmascotas, modalShow, mascotaSeleccionada, setModalShow, selectedTarjetas, seleccionado } = useContext(FirebaseContext);
-  //especieSeleccionada, edadSeleccionada, TamañoSeleccionada, SexoSeleccionada, listaFiltrada,
+  const { tarjetasmascotas, modalShow, mascotaSeleccionada, setModalShow, selectedTarjetas, seleccionado,
+    especieSeleccionada, edadSeleccionada, TamañoSeleccionada, SexoSeleccionada, listaFiltrada, tarjetasmascotasedad,
+    selectedEdad } = useContext(FirebaseContext);
+
   return (
     <div>
       <Dropdown onSelect={tarjetasmascotas}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {seleccionado}
+          {especieSeleccionada}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item eventKey={"todas"}>Todas</Dropdown.Item>
@@ -24,9 +26,9 @@ function Mascotas() {
         </Dropdown.Menu>
       </Dropdown>
       <br></br>
-      <Dropdown onSelect={tarjetasmascotas}>
+      <Dropdown onSelect={tarjetasmascotasedad}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {seleccionado}
+          {edadSeleccionada}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item eventKey={"todas"}>Todas</Dropdown.Item>
@@ -38,7 +40,7 @@ function Mascotas() {
       <br></br>
       <Dropdown onSelect={tarjetasmascotas}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {seleccionado}
+          {TamañoSeleccionada}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item eventKey={"todas"}>Todas</Dropdown.Item>
@@ -50,7 +52,7 @@ function Mascotas() {
       <br></br>
       <Dropdown onSelect={tarjetasmascotas}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {seleccionado}
+          {SexoSeleccionada}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item eventKey={"todas"}>Todas</Dropdown.Item>
@@ -59,39 +61,39 @@ function Mascotas() {
         </Dropdown.Menu>
       </Dropdown>
 
-
       {selectedTarjetas}
-      
+      {selectedEdad}
+
       <div style={{ width: '500px', height: '500px' }}>
-      <Modal show={modalShow} onHide={() => setModalShow(false)}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        
-      >
-        <Modal.Header closeButton  >
-          <Modal.Title>{mascotaSeleccionada.nombre}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="container">
-            <div className="image">
-              <img src={mascotaSeleccionada.imagen} alt={mascotaSeleccionada.nombre} />
+        <Modal show={modalShow} onHide={() => setModalShow(false)}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+
+        >
+          <Modal.Header closeButton  >
+            <Modal.Title>{mascotaSeleccionada.nombre}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="container">
+              <div className="image">
+                <img src={mascotaSeleccionada.imagen} alt={mascotaSeleccionada.nombre} />
+              </div>
+              <div className="info">
+                <p>Edad: {mascotaSeleccionada.edad}</p>
+                <p>Tamaño: {mascotaSeleccionada.tamaño}</p>
+                <p>Sexo: {mascotaSeleccionada.sexo}</p>
+              </div>
             </div>
-            <div className="info">
-              <p>Edad: {mascotaSeleccionada.edad}</p>
-              <p>Tamaño: {mascotaSeleccionada.tamaño}</p>
-              <p>Sexo: {mascotaSeleccionada.sexo}</p>
-            </div>
-          </div>
-          <p style={{ marginBottom: "0.1rem" }}>Descripcion: </p>
-          <p style={{ marginTop: "0" }}>{mascotaSeleccionada.descripcion}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setModalShow(false)}>
-            Cerrar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <p style={{ marginBottom: "0.1rem" }}>Descripcion: </p>
+            <p style={{ marginTop: "0" }}>{mascotaSeleccionada.descripcion}</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setModalShow(false)}>
+              Cerrar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

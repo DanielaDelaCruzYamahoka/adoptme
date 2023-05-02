@@ -123,10 +123,10 @@ const FirebaseProvider = (props) => {
     }
 
     //------------------------------Para mostrar las mascotas (Mascotas)
-    const [selectedEspecie, setSelectedEspecie] = useState([]);
+    const [selectedEspecie, setSelectedEspecie] = useState({});
     const [selectedEdad, setSelectedEdad] = useState([]);
-    const [selectedTamaño, setSelectedTamaño] = useState([]);
-    const [selectedSexo, setSelectedSexo] = useState([]);
+    const [selectedTamaño, setSelectedTamaño] = useState({});
+    const [selectedSexo, setSelectedSexo] = useState({});
 
     const [especieSeleccionada, setEspecieSeleccionada] = useState("Especies");
     const [edadSeleccionada, setEdadSeleccionada] = useState("Edad");
@@ -139,7 +139,7 @@ const FirebaseProvider = (props) => {
     const [seleccionado, setSeleccionado] = useState("");
 
     const [modalShow, setModalShow] = useState(false);
-    const [mascotaSeleccionada, setMascotaSeleccionada] = useState({});
+    const [mascotaSeleccionada, setMascotaSeleccionada] = useState([]);
 
     function tarjetasmascotas(eventKey, event) {
 
@@ -147,14 +147,38 @@ const FirebaseProvider = (props) => {
             if (eventKey === "perro" || eventKey === "gato") {
                 return mascota.especie === eventKey;
             }
+        }).map((mascota, index) => (
+            <Card key={index} className="card" style={{ width: '18rem' }}>
+                <Card.Img variant="top" src={mascota.imagen} />
+                <Card.Body>
+                    <Card.Title>{mascota.nombre}</Card.Title>
+                    <Card.Text>{mascota.especie} {mascota.edad}</Card.Text>
+                    <Button variant="primary" onClick={() => { setModalShow(true); setMascotaSeleccionada(mascota); }}>Perfil</Button>
+                </Card.Body>
+            </Card>
+        ));
+
+        if (eventKey === "perro" || eventKey === "gato") {
+
+            setEspecieSeleccionada(event.target.textContent);
+        }
+
+        console.log("tarjetas"+tarjetas)
+        setSelectedTarjetas(tarjetas)
+        
+        setSeleccionado(event.target.textContent)
+
+    }
+
+    function tarjetasmascotasedad(eventKey, event) {
+
+        let tarjetas = lista.filter(mascota => {
+            if (eventKey === "perro" || eventKey === "gato") {
+                if (eventKey === "todas")
+                    return lista
+            }
             if (eventKey === "cachorro" || eventKey === "adulto" || eventKey === "adulto mayor") {
                 return mascota.edad === eventKey;
-            }
-            if (eventKey === "pequeño" || eventKey === "mediano" || eventKey === "grande") {
-                return mascota.tamaño === eventKey;
-            }
-            if (eventKey === "hembra" || eventKey === "macho") {
-                return mascota.sexo === eventKey;
             }
         }).map((mascota, index) => (
             <Card key={index} className="card" style={{ width: '18rem' }}>
@@ -168,10 +192,18 @@ const FirebaseProvider = (props) => {
         ));
 
 
-        setSelectedTarjetas(tarjetas)
+        if (eventKey === "cachorro" || eventKey === "adulto" || eventKey === "adulto mayor") {
+
+            setEdadSeleccionada(event.target.textContent);
+        }
+
+        setSelectedEdad(tarjetas)
         setSeleccionado(event.target.textContent)
 
+        
+
     }
+
 
     //-----modal
 
@@ -190,7 +222,10 @@ const FirebaseProvider = (props) => {
                 tarjetasmascotas,
                 selectedTarjetas,
                 seleccionado,
-                modalShow,mascotaSeleccionada,setModalShow,
+                modalShow, mascotaSeleccionada, setModalShow,
+                tarjetasmascotasedad,
+                selectedEdad,
+                listaFiltrada,
 
                 especieSeleccionada,
                 edadSeleccionada,
