@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Index from './Components/Index';
+import FirebaseProvider from './Context/FirebaseContext';
 function App() {
 
   return (
-    <div>
-      <Index/>
-    </div>
+    <FirebaseProvider>
+      <div>
+        <Index />
+      </div>
+    </FirebaseProvider>
+
   );
 }
 
