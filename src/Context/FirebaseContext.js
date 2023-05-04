@@ -129,13 +129,17 @@ const FirebaseProvider = (props) => {
     const [edadSeleccionada, setEdadSeleccionada] = useState("Edad");
     const [TamañoSeleccionada, setTamañoSeleccionada] = useState("Tamaño");
     const [SexoSeleccionada, setSexoSeleccionada] = useState("Sexo");
-
+    //Estado final de las mascotas filtradas utilizadas para matearla y hacer las tarjetas.
     const [mascotasFiltradas, setMascotasFiltradas] = useState([]);
+    //Estados para filtros
     const [tarjetasespecie, setarjetasespecie] = useState([]);
     const [tarjetasedad, setarjetasedad] = useState([]);
     const [tarjetastamaño, setarjetastamaño] = useState([]);
     const [tarjetassexo, setarjetassexo] = useState([]);
+    //Para guardar las tarjetas
     const [tarjetasfinales, setarjetasfinales] = useState([]);
+
+
 
     function tarjetasmascotas(eventKey, event) {
         if (eventKey === "todas") {
@@ -224,6 +228,11 @@ const FirebaseProvider = (props) => {
         }
     }
 
+    //Para el modal
+    const [modalShow, setModalShow] = useState();
+    //Perfil de la mascota
+    const [mascotaperfil, setMascotaPerfil] = useState([]);
+
 
     function botonfiltros() {
         setMascotasFiltradas({
@@ -237,13 +246,16 @@ const FirebaseProvider = (props) => {
                 <Card.Body>
                     <Card.Title>{mascota.nombre}</Card.Title>
                     <Card.Text>{mascota.especie} {mascota.edad} {mascota.tamaño} {mascota.sexo}</Card.Text>
-                    <Button variant="primary">Adoptar</Button>
+                    <Button variant="primary" onClick={() => {setModalShow(true); setMascotaPerfil(mascota);}}>Perfil</Button>
                 </Card.Body>
             </Card>
         ));
         setarjetasfinales(tarjetas)
+        
+        
 
         //Todo esto es para que simpien las cosas despues de una busqueda nose si dejar esto
+        /* 
         setMascotasFiltradas(lista);
         setarjetasespecie([]);
         setarjetasedad([]);
@@ -253,9 +265,12 @@ const FirebaseProvider = (props) => {
         setEdadSeleccionada("Sexo");
         setTamañoSeleccionada("Tamaño");
         setSexoSeleccionada("Sexo");
-        
+        */
+
 
     }
+
+    
 
     return (
         <FirebaseContext.Provider
@@ -269,6 +284,10 @@ const FirebaseProvider = (props) => {
                 guardarCambios,
                 tarjetasmascotas,
                 tarjetasmascotastamaño,
+                mascotaperfil,
+                modalShow,
+                setModalShow,
+
 
                 mascotasFiltradas,
                 tarjetasmascotasedad,

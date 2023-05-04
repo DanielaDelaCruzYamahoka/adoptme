@@ -11,8 +11,9 @@ import { FirebaseContext } from '../Context/FirebaseContext';
 function Mascotas() {
   const { tarjetasmascotas, modalShow, mascotaSeleccionada, setModalShow, selectedTarjetas, seleccionado,
     especieSeleccionada, edadSeleccionada, TamañoSeleccionada, SexoSeleccionada, listaFiltrada, tarjetasmascotasedad,
-    selectedEdad, filtros, botonfiltros,tarjetasfinales, tarjetasmascotastamaño,tarjetasmascotassexo} = useContext(FirebaseContext);
+    selectedEdad, filtros, botonfiltros, tarjetasfinales, tarjetasmascotastamaño, tarjetasmascotassexo, mascotaperfil } = useContext(FirebaseContext);
 
+    
   return (
     <div>
       <Dropdown onSelect={tarjetasmascotas}>
@@ -60,10 +61,47 @@ function Mascotas() {
           <Dropdown.Item eventKey={"macho"}>Macho</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      
-      <Button variant="primary" onClick={()=> botonfiltros()}>Buscar</Button>
+
+      <Button variant="primary" onClick={() => botonfiltros()}>Buscar</Button>
 
       {tarjetasfinales}
+      {modalShow ?(
+        <div style={{ width: '500px', height: '500px' }}>
+        <Modal show={modalShow} onHide={() => setModalShow(false)}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+  
+  
+        >
+          <Modal.Header closeButton  >
+            <Modal.Title>{mascotaperfil.nombre}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="container">
+              <div className="image">
+                <img src={mascotaperfil.imagen} alt={mascotaperfil.nombre} />
+              </div>
+              <div className="info">
+                <p>Edad: {mascotaperfil.edad}</p>
+                <p>Tamaño: {mascotaperfil.tamaño}</p>
+                <p>Sexo: {mascotaperfil.sexo}</p>
+              </div>
+            </div>
+            <p style={{ marginBottom: "0.1rem" }}>Descripcion: </p>
+            <p style={{ marginTop: "0" }}>{mascotaperfil.descripcion}</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setModalShow(false)}>
+              Cerrar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+      ):null}
+      
+
+
     </div>
   );
 }
