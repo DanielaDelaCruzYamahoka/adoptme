@@ -134,71 +134,95 @@ const FirebaseProvider = (props) => {
     const [tarjetasespecie, setarjetasespecie] = useState([]);
     const [tarjetasedad, setarjetasedad] = useState([]);
     const [tarjetastamaño, setarjetastamaño] = useState([]);
+    const [tarjetassexo, setarjetassexo] = useState([]);
     const [tarjetasfinales, setarjetasfinales] = useState([]);
 
     function tarjetasmascotas(eventKey, event) {
-        const especi = eventKey
-        const tarespe = lista.filter(a => a.especie === especi)
-        setarjetasespecie(tarespe)//se utiliza entre las funciones de filtro
-        setEspecieSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
-        setMascotasFiltradas(tarespe);//es el que llamo para generar las tarjetas
-
+        if (eventKey === "todas") {
+            setMascotasFiltradas(lista);
+            setarjetasespecie([]);
+            setEspecieSeleccionada("Todas");
+        } else {
+            const especi = eventKey
+            const tarespe = lista.filter(a => a.especie === especi)
+            setarjetasespecie(tarespe)//se utiliza entre las funciones de filtro
+            setEspecieSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setMascotasFiltradas(tarespe);//es el que llamo para generar las tarjetas
+        }
     }
     function tarjetasmascotasedad(eventKey, event) {
-        const ed = eventKey;
-        const tarjetasedad = lista.filter(a => a.edad === ed);
+        if (eventKey === "todas") {
+            setMascotasFiltradas(lista);
+            setarjetasedad([]);
+            setEdadSeleccionada("Todas");
+
+        } else {
+            const ed = eventKey;
+            const tarjetasedad = lista.filter(a => a.edad === ed);
 
 
-        let especieconedad = tarjetasedad;
-        if (tarjetasespecie.length > 0) {
-            especieconedad = tarjetasedad.filter(mascota => {
-                const especieSeleccionada = tarjetasespecie[0].especie;
-                return mascota.especie === especieSeleccionada;
-            });
+            let especieconedad = tarjetasedad;
+            if (tarjetasespecie.length > 0) {
+                especieconedad = tarjetasedad.filter(mascota => {
+                    const especieSeleccionada = tarjetasespecie[0].especie;
+                    return mascota.especie === especieSeleccionada;
+                });
+            }
+
+            setMascotasFiltradas(especieconedad);//es el que llamo para generar las tarjetas
+            setEdadSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setarjetasedad(especieconedad)//se utiliza entre las funciones de filtro
         }
-
-        setMascotasFiltradas(especieconedad);//es el que llamo para generar las tarjetas
-        setEdadSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
-        setarjetasedad(especieconedad)//se utiliza entre las funciones de filtro
-        
     }
 
     function tarjetasmascotastamaño(eventKey, event) {
-        const tam = eventKey;
-        const tarjetastam = lista.filter(a => a.tamaño === tam);
-        
-        let especiecontam = tarjetastam;
-        if (tarjetasespecie.length > 0 || tarjetasedad.length > 0 || (tarjetasedad.length > 0 && tarjetasespecie.length > 0)) {
-            especiecontam = tarjetastam.filter(mascota => {
-                const edadSeleccionada = tarjetasedad[0].edad;
-                return mascota.tamaño === tam && mascota.edad === edadSeleccionada;
-            });
+        if (eventKey === "todas") {
+            setMascotasFiltradas(lista);
+            setarjetastamaño([]);
+            setTamañoSeleccionada("Todas");
+
+        } else {
+            const tam = eventKey;
+            const tarjetastam = lista.filter(a => a.tamaño === tam);
+
+            let especiecontam = tarjetastam;
+            if (tarjetasespecie.length > 0 || tarjetasedad.length > 0 || (tarjetasedad.length > 0 && tarjetasespecie.length > 0)) {
+                especiecontam = tarjetastam.filter(mascota => {
+                    const edadSeleccionada = tarjetasedad[0].edad;
+                    return mascota.tamaño === tam && mascota.edad === edadSeleccionada;
+                });
+            }
+
+            setMascotasFiltradas(especiecontam);//es el que llamo para generar las tarjetas
+            setTamañoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setarjetastamaño(especiecontam);//se utiliza entre las funciones de filtro
         }
-        
-        setMascotasFiltradas(especiecontam);//es el que llamo para generar las tarjetas
-        setTamañoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
-        setarjetastamaño(especiecontam);//se utiliza entre las funciones de filtro
-        
     }
 
     function tarjetasmascotassexo(eventKey, event) {
-        const sex = eventKey;
-        const tarjetasex = lista.filter(a => a.sexo === sex);
-      
-        let especieconsex = tarjetasex;
-        if (tarjetasespecie.length > 0 || tarjetasedad.length > 0 || tarjetastamaño.length > 0) {
-          especieconsex = tarjetasex.filter(mascota => {
-            const especieSeleccionada = tarjetasespecie.length > 0 ? tarjetasespecie[0].especie : true;
-            const edadSeleccionada = tarjetasedad.length > 0 ? mascota.edad === tarjetasedad[0].edad : true;
-            const tamañoSeleccionado = tarjetastamaño.length > 0 ? mascota.tamaño === tarjetastamaño[0].tamaño : true;
-            return mascota.sexo === sex && mascota.especie === especieSeleccionada && edadSeleccionada && tamañoSeleccionado;
-          });
+        if (eventKey === "todas") {
+            setMascotasFiltradas(lista);
+            setarjetassexo([]);
+            setSexoSeleccionada("Todas");
+        } else {
+            const sex = eventKey;
+            const tarjetasex = lista.filter(a => a.sexo === sex);
+
+            let especieconsex = tarjetasex;
+            if (tarjetasespecie.length > 0 || tarjetasedad.length > 0 || tarjetastamaño.length > 0) {
+                especieconsex = tarjetasex.filter(mascota => {
+                    const especieSeleccionada = tarjetasespecie.length > 0 ? tarjetasespecie[0].especie : true;
+                    const edadSeleccionada = tarjetasedad.length > 0 ? mascota.edad === tarjetasedad[0].edad : true;
+                    const tamañoSeleccionado = tarjetastamaño.length > 0 ? mascota.tamaño === tarjetastamaño[0].tamaño : true;
+                    return mascota.sexo === sex && mascota.especie === especieSeleccionada && edadSeleccionada && tamañoSeleccionado;
+                });
+            }
+
+            setMascotasFiltradas(especieconsex);//es el que llamo para generar las tarjetas
+            setSexoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setarjetassexo(especieconsex);//se utiliza entre las funciones de filtro
         }
-      
-        setMascotasFiltradas(especieconsex);//es el que llamo para generar las tarjetas
-        setSexoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
-        console.log(especieconsex);
-      }
+    }
 
 
     function botonfiltros() {
@@ -218,6 +242,19 @@ const FirebaseProvider = (props) => {
             </Card>
         ));
         setarjetasfinales(tarjetas)
+
+        //Todo esto es para que simpien las cosas despues de una busqueda nose si dejar esto
+        setMascotasFiltradas(lista);
+        setarjetasespecie([]);
+        setarjetasedad([]);
+        setarjetastamaño([]);
+        setarjetassexo([]);
+        setEspecieSeleccionada("Especie");
+        setEdadSeleccionada("Sexo");
+        setTamañoSeleccionada("Tamaño");
+        setSexoSeleccionada("Sexo");
+        
+
     }
 
     return (
