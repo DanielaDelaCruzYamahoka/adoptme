@@ -11,7 +11,7 @@ import { FirebaseContext } from '../Context/FirebaseContext';
 function Mascotas() {
   const { tarjetasmascotas, modalShow, mascotaSeleccionada, setModalShow, selectedTarjetas, seleccionado,
     especieSeleccionada, edadSeleccionada, TamañoSeleccionada, SexoSeleccionada, listaFiltrada, tarjetasmascotasedad,
-    selectedEdad } = useContext(FirebaseContext);
+    selectedEdad, filtros, botonfiltros,tarjetasfinales, tarjetasmascotastamaño} = useContext(FirebaseContext);
 
   return (
     <div>
@@ -38,7 +38,7 @@ function Mascotas() {
         </Dropdown.Menu>
       </Dropdown>
       <br></br>
-      <Dropdown onSelect={tarjetasmascotas}>
+      <Dropdown onSelect={tarjetasmascotastamaño}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           {TamañoSeleccionada}
         </Dropdown.Toggle>
@@ -60,11 +60,20 @@ function Mascotas() {
           <Dropdown.Item eventKey={"macho"}>Macho</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+      
+      <Button variant="primary" onClick={()=> botonfiltros()}>Buscar</Button>
 
-      {selectedTarjetas}
-      {selectedEdad}
+      {tarjetasfinales}
+    </div>
+  );
+}
 
-      <div style={{ width: '500px', height: '500px' }}>
+
+
+export default Mascotas;
+
+
+/* <div style={{ width: '500px', height: '500px' }}>
         <Modal show={modalShow} onHide={() => setModalShow(false)}
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
@@ -94,11 +103,4 @@ function Mascotas() {
             </Button>
           </Modal.Footer>
         </Modal>
-      </div>
-    </div>
-  );
-}
-
-
-
-export default Mascotas;
+      </div>*/
