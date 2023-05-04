@@ -11,7 +11,7 @@ import { FirebaseContext } from '../Context/FirebaseContext';
 function Mascotas() {
   const { tarjetasmascotas, modalShow, mascotaSeleccionada, setModalShow, selectedTarjetas, seleccionado,
     especieSeleccionada, edadSeleccionada, TamañoSeleccionada, SexoSeleccionada, listaFiltrada, tarjetasmascotasedad,
-    selectedEdad, filtros, botonfiltros,tarjetasfinales, tarjetasmascotastamaño} = useContext(FirebaseContext);
+    selectedEdad, filtros, botonfiltros,tarjetasfinales, tarjetasmascotastamaño,tarjetasmascotassexo} = useContext(FirebaseContext);
 
   return (
     <div>
@@ -50,7 +50,7 @@ function Mascotas() {
         </Dropdown.Menu>
       </Dropdown>
       <br></br>
-      <Dropdown onSelect={tarjetasmascotas}>
+      <Dropdown onSelect={tarjetasmascotassexo}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           {SexoSeleccionada}
         </Dropdown.Toggle>

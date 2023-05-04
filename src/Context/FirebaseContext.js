@@ -139,9 +139,9 @@ const FirebaseProvider = (props) => {
     function tarjetasmascotas(eventKey, event) {
         const especi = eventKey
         const tarespe = lista.filter(a => a.especie === especi)
-        setarjetasespecie(tarespe)
-        setEspecieSeleccionada(event.target.textContent);
-        setMascotasFiltradas(tarespe);
+        setarjetasespecie(tarespe)//se utiliza entre las funciones de filtro
+        setEspecieSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+        setMascotasFiltradas(tarespe);//es el que llamo para generar las tarjetas
 
     }
     function tarjetasmascotasedad(eventKey, event) {
@@ -157,10 +157,10 @@ const FirebaseProvider = (props) => {
             });
         }
 
-        setMascotasFiltradas(especieconedad);
-        setEdadSeleccionada(event.target.textContent);
-        setarjetasedad(especieconedad)
-        console.log(mascotasFiltradas)
+        setMascotasFiltradas(especieconedad);//es el que llamo para generar las tarjetas
+        setEdadSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+        setarjetasedad(especieconedad)//se utiliza entre las funciones de filtro
+        
     }
 
     function tarjetasmascotastamaño(eventKey, event) {
@@ -175,10 +175,31 @@ const FirebaseProvider = (props) => {
             });
         }
         
-        setMascotasFiltradas(especiecontam);
-        setTamañoSeleccionada(event.target.textContent);
-        console.log(especiecontam)
+        setMascotasFiltradas(especiecontam);//es el que llamo para generar las tarjetas
+        setTamañoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+        setarjetastamaño(especiecontam);//se utiliza entre las funciones de filtro
+        
     }
+
+    function tarjetasmascotassexo(eventKey, event) {
+        const sex = eventKey;
+        const tarjetasex = lista.filter(a => a.sexo === sex);
+      
+        let especieconsex = tarjetasex;
+        if (tarjetasespecie.length > 0 || tarjetasedad.length > 0 || tarjetastamaño.length > 0) {
+          especieconsex = tarjetasex.filter(mascota => {
+            const especieSeleccionada = tarjetasespecie.length > 0 ? tarjetasespecie[0].especie : true;
+            const edadSeleccionada = tarjetasedad.length > 0 ? mascota.edad === tarjetasedad[0].edad : true;
+            const tamañoSeleccionado = tarjetastamaño.length > 0 ? mascota.tamaño === tarjetastamaño[0].tamaño : true;
+            return mascota.sexo === sex && mascota.especie === especieSeleccionada && edadSeleccionada && tamañoSeleccionado;
+          });
+        }
+      
+        setMascotasFiltradas(especieconsex);//es el que llamo para generar las tarjetas
+        setSexoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+        console.log(especieconsex);
+      }
+
 
     function botonfiltros() {
         setMascotasFiltradas({
@@ -191,7 +212,7 @@ const FirebaseProvider = (props) => {
                 <Card.Img variant="top" src={mascota.imagen} />
                 <Card.Body>
                     <Card.Title>{mascota.nombre}</Card.Title>
-                    <Card.Text>{mascota.especie} {mascota.edad} {mascota.tamaño}</Card.Text>
+                    <Card.Text>{mascota.especie} {mascota.edad} {mascota.tamaño} {mascota.sexo}</Card.Text>
                     <Button variant="primary">Adoptar</Button>
                 </Card.Body>
             </Card>
@@ -216,6 +237,7 @@ const FirebaseProvider = (props) => {
                 tarjetasmascotasedad,
                 botonfiltros,
                 tarjetasfinales,
+                tarjetasmascotassexo,
 
                 especieSeleccionada,
                 edadSeleccionada,
