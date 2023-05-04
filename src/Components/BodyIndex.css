@@ -9,7 +9,7 @@ main{
 
 main h2{
 	font-size: 3rem;
-	color: #FF6B6B;
+	color: #ff98be;
 }
 main h3{
 	color: black;
@@ -17,7 +17,7 @@ main h3{
 }
 main p{
 	padding: 0 10rem 0 10rem;
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 }
 .tabla{
 	width: 90%;

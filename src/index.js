@@ -6,8 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PrincipalMascotas from './Components/PrincipalMascotas'
 import Registro from './Components/Registro'
+import UsuariosAdoptme from './Context/UsuariosAdoptme'
 import Index from './Components/Index'
 import InicioSesion from './Components/InicioSesion'
+import SesionUsuarios from './Context/SesionUsuarios'
 import Nosotros from './Components/Nosotros'
 import Contacto from './Components/Contacto'
 import Adoptar from './Components/Adoptar'
@@ -27,12 +29,12 @@ const router = createBrowserRouter([
   },
   {
     path: '/registro',
-    element: <Registro />,
+    element: <UsuariosAdoptme />,
     errorElement: <h1>Error</h1>
   },
   {
     path: '/InicioSesion',
-    element: <InicioSesion />,
+    element: <SesionUsuarios />,
     errorElement: <h1>Error</h1>
   },
   {

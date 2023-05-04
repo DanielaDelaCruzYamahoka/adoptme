@@ -8,16 +8,25 @@
 	display: flex;
 	padding-bottom: 10rem;
 	font-size: 1.5rem;
-	padding-top: 10rem;
+	padding-top: 5rem;
 }
-
+.Formulario2{
+	display:contents;
+	justify-content: center;
+	display: flex;
+	padding-bottom: 5rem;
+	font-size: 1.5rem;
+	padding-top: 2rem;
+}
+.Formulario img{
+	margin-left: 50px;
+}
 .Formulario form{
 	width: 50%;
 }
 
 .Formulario input{
 	font-size: 1.1rem;
-    
 }
 
 form .enviar{

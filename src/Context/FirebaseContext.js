@@ -123,91 +123,154 @@ const FirebaseProvider = (props) => {
     }
 
     //------------------------------Para mostrar las mascotas (Mascotas)
-    const [selectedEspecie, setSelectedEspecie] = useState({});
-    const [selectedEdad, setSelectedEdad] = useState([]);
-    const [selectedTamaño, setSelectedTamaño] = useState({});
-    const [selectedSexo, setSelectedSexo] = useState({});
+
 
     const [especieSeleccionada, setEspecieSeleccionada] = useState("Especies");
     const [edadSeleccionada, setEdadSeleccionada] = useState("Edad");
     const [TamañoSeleccionada, setTamañoSeleccionada] = useState("Tamaño");
     const [SexoSeleccionada, setSexoSeleccionada] = useState("Sexo");
+    //Estado final de las mascotas filtradas utilizadas para matearla y hacer las tarjetas.
+    const [mascotasFiltradas, setMascotasFiltradas] = useState([]);
+    //Estados para filtros
+    const [tarjetasespecie, setarjetasespecie] = useState([]);
+    const [tarjetasedad, setarjetasedad] = useState([]);
+    const [tarjetastamaño, setarjetastamaño] = useState([]);
+    const [tarjetassexo, setarjetassexo] = useState([]);
+    //Para guardar las tarjetas
+    const [tarjetasfinales, setarjetasfinales] = useState([]);
 
-    const [listaFiltrada, setlistafiltros] = useState([]);
 
-    const [selectedTarjetas, setSelectedTarjetas] = useState([]);
-    const [seleccionado, setSeleccionado] = useState("");
-
-    const [modalShow, setModalShow] = useState(false);
-    const [mascotaSeleccionada, setMascotaSeleccionada] = useState([]);
 
     function tarjetasmascotas(eventKey, event) {
-
-        let tarjetas = lista.filter(mascota => {
-            if (eventKey === "perro" || eventKey === "gato") {
-                return mascota.especie === eventKey;
-            }
-        }).map((mascota, index) => (
-            <Card key={index} className="card" style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={mascota.imagen} />
-                <Card.Body>
-                    <Card.Title>{mascota.nombre}</Card.Title>
-                    <Card.Text>{mascota.especie} {mascota.edad}</Card.Text>
-                    <Button variant="primary" onClick={() => { setModalShow(true); setMascotaSeleccionada(mascota); }}>Perfil</Button>
-                </Card.Body>
-            </Card>
-        ));
-
-        if (eventKey === "perro" || eventKey === "gato") {
-
-            setEspecieSeleccionada(event.target.textContent);
+        if (eventKey === "todas") {
+            setMascotasFiltradas(lista);
+            setarjetasespecie([]);
+            setEspecieSeleccionada("Todas");
+        } else {
+            const especi = eventKey
+            const tarespe = lista.filter(a => a.especie === especi)
+            setarjetasespecie(tarespe)//se utiliza entre las funciones de filtro
+            setEspecieSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setMascotasFiltradas(tarespe);//es el que llamo para generar las tarjetas
         }
-
-        console.log("tarjetas"+tarjetas)
-        setSelectedTarjetas(tarjetas)
-        
-        setSeleccionado(event.target.textContent)
-
     }
-
     function tarjetasmascotasedad(eventKey, event) {
+        if (eventKey === "todas") {
+            setMascotasFiltradas(lista);
+            setarjetasedad([]);
+            setEdadSeleccionada("Todas");
 
-        let tarjetas = lista.filter(mascota => {
-            if (eventKey === "perro" || eventKey === "gato") {
-                if (eventKey === "todas")
-                    return lista
+        } else {
+            const ed = eventKey;
+            const tarjetasedad = lista.filter(a => a.edad === ed);
+
+
+            let especieconedad = tarjetasedad;
+            if (tarjetasespecie.length > 0) {
+                especieconedad = tarjetasedad.filter(mascota => {
+                    const especieSeleccionada = tarjetasespecie[0].especie;
+                    return mascota.especie === especieSeleccionada;
+                });
             }
-            if (eventKey === "cachorro" || eventKey === "adulto" || eventKey === "adulto mayor") {
-                return mascota.edad === eventKey;
+
+            setMascotasFiltradas(especieconedad);//es el que llamo para generar las tarjetas
+            setEdadSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setarjetasedad(especieconedad)//se utiliza entre las funciones de filtro
+        }
+    }
+
+    function tarjetasmascotastamaño(eventKey, event) {
+        if (eventKey === "todas") {
+            setMascotasFiltradas(lista);
+            setarjetastamaño([]);
+            setTamañoSeleccionada("Todas");
+
+        } else {
+            const tam = eventKey;
+            const tarjetastam = lista.filter(a => a.tamaño === tam);
+
+            let especiecontam = tarjetastam;
+            if (tarjetasespecie.length > 0 || tarjetasedad.length > 0 || (tarjetasedad.length > 0 && tarjetasespecie.length > 0)) {
+                especiecontam = tarjetastam.filter(mascota => {
+                    const edadSeleccionada = tarjetasedad[0].edad;
+                    return mascota.tamaño === tam && mascota.edad === edadSeleccionada;
+                });
             }
-        }).map((mascota, index) => (
+
+            setMascotasFiltradas(especiecontam);//es el que llamo para generar las tarjetas
+            setTamañoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setarjetastamaño(especiecontam);//se utiliza entre las funciones de filtro
+        }
+    }
+
+    function tarjetasmascotassexo(eventKey, event) {
+        if (eventKey === "todas") {
+            setMascotasFiltradas(lista);
+            setarjetassexo([]);
+            setSexoSeleccionada("Todas");
+        } else {
+            const sex = eventKey;
+            const tarjetasex = lista.filter(a => a.sexo === sex);
+
+            let especieconsex = tarjetasex;
+            if (tarjetasespecie.length > 0 || tarjetasedad.length > 0 || tarjetastamaño.length > 0) {
+                especieconsex = tarjetasex.filter(mascota => {
+                    const especieSeleccionada = tarjetasespecie.length > 0 ? tarjetasespecie[0].especie : true;
+                    const edadSeleccionada = tarjetasedad.length > 0 ? mascota.edad === tarjetasedad[0].edad : true;
+                    const tamañoSeleccionado = tarjetastamaño.length > 0 ? mascota.tamaño === tarjetastamaño[0].tamaño : true;
+                    return mascota.sexo === sex && mascota.especie === especieSeleccionada && edadSeleccionada && tamañoSeleccionado;
+                });
+            }
+
+            setMascotasFiltradas(especieconsex);//es el que llamo para generar las tarjetas
+            setSexoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setarjetassexo(especieconsex);//se utiliza entre las funciones de filtro
+        }
+    }
+
+    //Para el modal
+    const [modalShow, setModalShow] = useState();
+    //Perfil de la mascota
+    const [mascotaperfil, setMascotaPerfil] = useState([]);
+
+
+    function botonfiltros() {
+        setMascotasFiltradas({
+            ...mascotasFiltradas
+        })
+
+        // Generar tarjetas
+        const tarjetas = mascotasFiltradas.map((mascota, index) => (
             <Card key={index} className="card" style={{ width: '18rem' }}>
                 <Card.Img variant="top" src={mascota.imagen} />
                 <Card.Body>
                     <Card.Title>{mascota.nombre}</Card.Title>
-                    <Card.Text>{mascota.especie} {mascota.edad}</Card.Text>
-                    <Button variant="primary" onClick={() => { setModalShow(true); setMascotaSeleccionada(mascota); }}>Perfil</Button>
+                    <Card.Text>{mascota.especie} {mascota.edad} {mascota.tamaño} {mascota.sexo}</Card.Text>
+                    <Button variant="primary" onClick={() => {setModalShow(true); setMascotaPerfil(mascota);}}>Perfil</Button>
                 </Card.Body>
             </Card>
         ));
-
-
-        if (eventKey === "cachorro" || eventKey === "adulto" || eventKey === "adulto mayor") {
-
-            setEdadSeleccionada(event.target.textContent);
-        }
-
-        setSelectedEdad(tarjetas)
-        setSeleccionado(event.target.textContent)
-
+        setarjetasfinales(tarjetas)
         
+        
+
+        //Todo esto es para que simpien las cosas despues de una busqueda nose si dejar esto
+        /* 
+        setMascotasFiltradas(lista);
+        setarjetasespecie([]);
+        setarjetasedad([]);
+        setarjetastamaño([]);
+        setarjetassexo([]);
+        setEspecieSeleccionada("Especie");
+        setEdadSeleccionada("Sexo");
+        setTamañoSeleccionada("Tamaño");
+        setSexoSeleccionada("Sexo");
+        */
+
 
     }
 
-
-    //-----modal
-
-
+    
 
     return (
         <FirebaseContext.Provider
@@ -220,12 +283,17 @@ const FirebaseProvider = (props) => {
                 modificar,
                 guardarCambios,
                 tarjetasmascotas,
-                selectedTarjetas,
-                seleccionado,
-                modalShow, mascotaSeleccionada, setModalShow,
+                tarjetasmascotastamaño,
+                mascotaperfil,
+                modalShow,
+                setModalShow,
+
+
+                mascotasFiltradas,
                 tarjetasmascotasedad,
-                selectedEdad,
-                listaFiltrada,
+                botonfiltros,
+                tarjetasfinales,
+                tarjetasmascotassexo,
 
                 especieSeleccionada,
                 edadSeleccionada,
@@ -238,164 +306,6 @@ const FirebaseProvider = (props) => {
 
         </FirebaseContext.Provider>
     );
-
-    /* 
-    ----------------opcion 1
-
-    function tarjetasmascotas(eventKey, event) {
-
-        if (eventKey === "perro" || eventKey === "gato") {
-            const tarjetas = lista
-                .filter((mascota) => mascota.especie === eventKey)
-                .map((mascota, index) => (
-                    <Card key={index} className="card" style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={mascota.imagen} />
-                        <Card.Body>
-                            <Card.Title>{mascota.nombre}</Card.Title>
-                            <Card.Text>{mascota.especie} {mascota.edad}</Card.Text>
-                            <Button variant="primary">Adoptar</Button>
-                        </Card.Body>
-                    </Card>
-                ));
-
-            setSelectedEspecie(
-                tarjetas
-            );
-            setEspecieSeleccionada(event.target.textContent)
-        }
-        if (eventKey === "cachorro" || eventKey === "adulto" || eventKey === "adulto mayor") {
-            const tarjetasedad = lista
-                .filter((mascota) => mascota.edad === eventKey)
-                .map((mascota, index) => (
-                    <Card key={index} className="card" style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={mascota.imagen} />
-                        <Card.Body>
-                            <Card.Title>{mascota.nombre}</Card.Title>
-                            <Card.Text>{mascota.especie} {mascota.edad}</Card.Text>
-                            <Button variant="primary">Adoptar</Button>
-                        </Card.Body>
-                    </Card>
-                ));
-            setSelectedEdad(
-                tarjetasedad
-            );
-            setEdadSeleccionada(event.target.textContent)
-        }
-        if (eventKey === "pequeño" || eventKey === "mediano" || eventKey === "grande") {
-            const tarjetasTamaño = lista
-                .filter((mascota) => mascota.tamaño === eventKey)
-                .map((mascota, index) => (
-                    <Card key={index} className="card" style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={mascota.imagen} />
-                        <Card.Body>
-                            <Card.Title>{mascota.nombre}</Card.Title>
-                            <Card.Text>{mascota.especie} {mascota.edad}</Card.Text>
-                            <Button variant="primary">Adoptar</Button>
-                        </Card.Body>
-                    </Card>
-                ));
-            setSelectedTamaño(
-                tarjetasTamaño
-            );
-            setTamañoSeleccionada(event.target.textContent)
-
-        }
-        if (eventKey === "hembra" || eventKey === "macho") {
-            const tarjetasexo = lista
-                .filter((mascota) => mascota.sexo === eventKey)
-                .map((mascota, index) => (
-                    <Card key={index} className="card" style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={mascota.imagen} />
-                        <Card.Body>
-                            <Card.Title>{mascota.nombre}</Card.Title>
-                            <Card.Text>{mascota.especie} {mascota.edad}</Card.Text>
-                            <Button variant="primary">Adoptar</Button>
-                        </Card.Body>
-                    </Card>
-                ));
-            setSelectedSexo(
-                tarjetasexo
-            );
-            setSexoSeleccionada(event.target.textContent)
-
-        }
-    }
-
-    ----------------opcion 2
-
-    const [selectedEspecie, setSelectedEspecie] = useState([]);
-    const [selectedEdad, setSelectedEdad] = useState([]);
-    const [selectedTamaño, setSelectedTamaño] = useState([]);
-    const [selectedSexo, setSelectedSexo] = useState([]);
-
-    const [especieSeleccionada, setEspecieSeleccionada] = useState("Especies");
-    const [edadSeleccionada, setEdadSeleccionada] = useState("Edad");
-    const [TamañoSeleccionada, setTamañoSeleccionada] = useState("Tamaño");
-    const [SexoSeleccionada, setSexoSeleccionada] = useState("Sexo");
-
-    const [listaFiltrada, setlistafiltros] = useState([]);
-
-    function tarjetasmascotas(eventKey, event) {
-
-        // Filtro por especie
-        let mascotasFiltradas = lista;
-        if (eventKey === "perro" || eventKey === "gato") {
-            mascotasFiltradas = lista.filter((mascota) => mascota.especie === eventKey);
-        }
-
-        // Filtro por edad
-        if (eventKey === "cachorro" || eventKey === "adulto" || eventKey === "adulto mayor") {
-            mascotasFiltradas = mascotasFiltradas.filter((mascota) => mascota.edad === eventKey);
-        }
-
-        // Filtro por tamaño
-        if (eventKey === "pequeño" || eventKey === "mediano" || eventKey === "grande") {
-            mascotasFiltradas = mascotasFiltradas.filter((mascota) => mascota.tamaño === eventKey);
-        }
-
-        // Filtro por sexo
-        if (eventKey === "hembra" || eventKey === "macho") {
-            mascotasFiltradas = mascotasFiltradas.filter((mascota) => mascota.sexo === eventKey);
-        }
-
-        // Generar tarjetas
-        const tarjetas = mascotasFiltradas.map((mascota, index) => (
-            <Card key={index} className="card" style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={mascota.imagen} />
-                <Card.Body>
-                    <Card.Title>{mascota.nombre}</Card.Title>
-                    <Card.Text>{mascota.especie} {mascota.edad}</Card.Text>
-                    <Button variant="primary">Adoptar</Button>
-                </Card.Body>
-            </Card>
-        ));
-        console.log(tarjetas)
-        // Actualizar estado de las tarjetas
-        if (eventKey === "perro" || eventKey === "gato") {
-            setSelectedEspecie(tarjetas);
-            setEspecieSeleccionada(event.target.textContent);
-        }
-        if (eventKey === "cachorro" || eventKey === "adulto" || eventKey === "adulto mayor") {
-            setSelectedEdad(tarjetas);
-            setEdadSeleccionada(event.target.textContent);
-        }
-        if (eventKey === "pequeño" || eventKey === "mediano" || eventKey === "grande") {
-            setSelectedTamaño(tarjetas);
-            setTamañoSeleccionada(event.target.textContent);
-        }
-        if (eventKey === "hembra" || eventKey === "macho") {
-            setSelectedSexo(tarjetas);
-            setSexoSeleccionada(event.target.textContent);
-        }
-        console.log("especie: "+selectedEspecie);
-        console.log("edad: "+selectedEdad);
-        console.log("sexo: "+selectedSexo);
-        console.log("tamaño: "+selectedTamaño);
-
-        setlistafiltros((prevState) => Array.from(new Set([...prevState, ...selectedEspecie, ...selectedEdad, ...selectedSexo, ...selectedTamaño])))
-    }
-    
-    */
 
 
 }

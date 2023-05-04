@@ -1,25 +1,49 @@
 import React from "react";
 import "./Header.css";
-import logodos from "../logodos.png";
+import logo from "../logoadoptme.png";
 import { Link } from "react-router-dom";
+import {Form, Image} from 'react-bootstrap/';
 
 function Header(props) {
   return (
     <section>
-      <header className="navbar">
+      <header className="navbar" >
+        
         <Link to={"/Index"}>
-          <img className="logo" src={logodos} alt="logo" style={{backgroundColor: 'transparent'}}/>
+          <Image className="logo" src={logo}/>
         </Link>
 
         <nav className="Principal">
           <Link to={"/registro"} className="NavPrimary">
+            <Form.Label >
             Registrarme
+            </Form.Label>
           </Link>
-          <Link to={"/InicioSesion"}>Iniciar sesión</Link>
-          <Link to={"/Adoptar"}>Adoptar</Link>
-          <Link to={"/Nosotros"}>Sobre nosotros</Link>
-          <Link to={"/Contacto"}>Contacto</Link>
-          <Link to={"/Mipanel"}>Mi Panel</Link>
+          <Link to={"/InicioSesion"}>
+          <Form.Label>
+            Iniciar Sesión
+          </Form.Label>
+          </Link>
+          <Link to={"/Adoptar"}>
+          <Form.Label>
+            Adoptar
+          </Form.Label> 
+          </Link>
+          <Link to={"/Nosotros"}>
+          <Form.Label>
+            Nosotros
+          </Form.Label>
+          </Link>
+          <Link to={"/Contacto"}>
+          <Form.Label>
+          Contáctanos
+          </Form.Label>
+          </Link>
+          <Link to={"/Mipanel"}>
+          <Form.Label>
+          Mi panel
+          </Form.Label>
+          </Link>
         </nav>
       </header>
 
@@ -27,7 +51,6 @@ function Header(props) {
         <h3>{props.texto1}</h3>
         <br/>
         <h1>{props.texto2}</h1>
-        <br/>
         <p>No compres la felicidad, adopta</p>
       </section>
     </section>

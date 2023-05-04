@@ -6,13 +6,13 @@ html body {
 }
 
 .navbar {
-  height: 8rem;
+  height: 6rem;
   position: relative;
 }
 .logo {
-  max-width: 8rem;
-  height: 8rem;
-  position: absolute;
+  max-width: 5rem;
+  height: 5rem;
+  position: relative;
   top: 0;
 }
 
@@ -24,19 +24,19 @@ html body {
   letter-spacing: 0.1rem;
 }
 .Principal a {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin: 0rem 1rem;
   color: black;
   text-decoration: none;
   transition: all 0.2s ease;
 }
 .Principal a:hover {
-  color: #fc7644;
+  color: #ff98be;
 }
 
 .Principal .NavPrimary {
   color: white;
-  background-color: #ff6b6b;
+  background-color: #ff98be;
   padding: 8px 2rem;
   border-radius: 1rem;
   transition: all 500ms ease;
@@ -62,7 +62,7 @@ html body {
 }
 h1 {
   height: 0;
-  font-size: 8rem !important;
+  font-size: 5rem !important;
   font-weight: 150;
   color: white;
   margin-top: 6rem;
@@ -70,7 +70,6 @@ h1 {
  h3 {
   height: 0;
   padding-top: 5rem;
-  padding-right: 20rem;
   font-size: 2rem;
   font-weight: 150;
   color: white;
