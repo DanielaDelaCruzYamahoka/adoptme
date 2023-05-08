@@ -1,21 +1,18 @@
-import React from "react";
-import { Button, Card, Container, Dropdown, Modal, Row, Col } from 'react-bootstrap/';
-import './Mascotas.css'
-import FooterIndex from './FooterIndex';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useContext, useState } from 'react';
+import {Button, Card, Dropdown, Modal} from 'react-bootstrap/';
+import { useContext } from 'react';
 import { FirebaseContext } from '../Context/FirebaseContext';
 
-//cambie el color de blanco en negro en FooterIndex porque la descripcion de las tarjetas me las pone como blancas ANALIZAR
-function Mascotas() {
-  const { tarjetasmascotas, modalShow, mascotaSeleccionada, setModalShow, selectedTarjetas, seleccionado,
-    especieSeleccionada, edadSeleccionada, TamañoSeleccionada, SexoSeleccionada, listaFiltrada, tarjetasmascotasedad,
-    selectedEdad, filtros, botonfiltros, tarjetasfinales, tarjetasmascotastamaño, tarjetasmascotassexo, mascotaperfil } = useContext(FirebaseContext);
+function AdoptarMascotas(){
+    const { tarjetasmascotas, modalShow, mascotaSeleccionada, setModalShow, selectedTarjetas, seleccionado,
+        especieSeleccionada, edadSeleccionada, TamañoSeleccionada, SexoSeleccionada, listaFiltrada, tarjetasmascotasedad,
+        selectedEdad, filtros, botonfiltros, tarjetasfinales, tarjetasmascotastamaño, tarjetasmascotassexo, mascotaperfil } = useContext(FirebaseContext);
+    return(
+        <div>
+            <div style={{display:"flex", flexDirection:"row", justifyContent:"center"}}>
+                <h2>Encuentra a tu nuevo compañero</h2>
+            </div>
 
-    
-  return (
-    <div >
-      <div style={{display:"flex", flexDirection:"row"}}>
+            <div style={{display:"flex", flexDirection:"row"}}>
               <Dropdown onSelect={tarjetasmascotas}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           {especieSeleccionada}
@@ -62,8 +59,7 @@ function Mascotas() {
         </Dropdown.Menu>
       </Dropdown>
       </div>
-
-
+            
       <Button variant="primary" onClick={() => botonfiltros()}>Buscar</Button>
       <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", justifyContent:"space-around"}}>
               {tarjetasfinales}
@@ -100,43 +96,9 @@ function Mascotas() {
       </div>
       ):null}
       </div>
-    </div>
-  );
+        </div>
+
+    )
 }
 
-
-
-export default Mascotas;
-
-
-/* <div style={{ width: '500px', height: '500px' }}>
-        <Modal show={modalShow} onHide={() => setModalShow(false)}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-
-        >
-          <Modal.Header closeButton  >
-            <Modal.Title>{mascotaSeleccionada.nombre}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="container">
-              <div className="image">
-                <img src={mascotaSeleccionada.imagen} alt={mascotaSeleccionada.nombre} />
-              </div>
-              <div className="info">
-                <p>Edad: {mascotaSeleccionada.edad}</p>
-                <p>Tamaño: {mascotaSeleccionada.tamaño}</p>
-                <p>Sexo: {mascotaSeleccionada.sexo}</p>
-              </div>
-            </div>
-            <p style={{ marginBottom: "0.1rem" }}>Descripcion: </p>
-            <p style={{ marginTop: "0" }}>{mascotaSeleccionada.descripcion}</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setModalShow(false)}>
-              Cerrar
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>*/
+export default AdoptarMascotas;

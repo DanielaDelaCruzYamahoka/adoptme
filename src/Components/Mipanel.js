@@ -1,33 +1,37 @@
 import { Button, Card, Dropdown, InputGroup, Form, Table } from 'react-bootstrap';
-//import './Mipanel.css'
-import FooterIndex from './FooterIndex';
-import Header from './Header';
-import Navegacion from './Navegacion';
-import perro1 from '../istock.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
 import { useContext } from 'react';
 import { FirebaseContext } from '../Context/FirebaseContext';
 
 function Mipanel(props) {
-    const { lista, mascotas, manejoenvio, guardarImagen, eliminar, modificar, guardarCambios } = useContext(FirebaseContext);
+    const { lista, mascotas, manejoenvio, guardarImagen, eliminar, modificar, guardarCambios,handleSubmit } = useContext(FirebaseContext);
 
     return (
 
         <div>
-            <Header
-                texto1="Bienvenido"
-                texto2="Mi Panel"
-            />
-            <Navegacion
-                etiqueta={<a>Aquí van los links de navegacion</a>} />
-            <Card>
+            <div style={{display:"flex",justifyContent:"space-around", flexFlow:"row-wrap", alignItems:"stretch"}}>
+                
+                <Card>
                 <Card.Body>
                     <Card.Title>Ingresar Mascota</Card.Title>
                     <Card.Text>Ingresa los datos de la mascota que deseas poner en adopción</Card.Text>
+                    <div>
+                        <Form.Label>Primero envía la imagen</Form.Label>
+                        <InputGroup className="mb-3">
+                                <Form.Control type="file"
+                                name="url"
+                                id="url"
+                                onChange={guardarImagen}
+                                />
+                            <Button variant="primary" type="submit" onClick={handleSubmit}>
+                            Enviar imagen
+                            </Button>
+                        </InputGroup>
+                    </div>
                     <Form onSubmit={manejoenvio}>
-                        <Form.Group >
-                            <Form.Label>Id</Form.Label>
+                        <InputGroup  className="mb-3">
+                            <InputGroup.Text>Id</InputGroup.Text>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingresa id de la mascota"
@@ -36,10 +40,10 @@ function Mipanel(props) {
                                 value={mascotas.id}
                                 onChange={guardarCambios}
                             />
-                        </Form.Group>
+                        </InputGroup>
 
-                        <Form.Group >
-                            <Form.Label>Nombre</Form.Label>
+                        <InputGroup  className="mb-3">
+                            <InputGroup.Text>Nombre</InputGroup.Text>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingresa nombre de la mascota"
@@ -48,10 +52,10 @@ function Mipanel(props) {
                                 value={mascotas.nombre}
                                 onChange={guardarCambios}
                             />
-                        </Form.Group>
+                        </InputGroup>
 
-                        <Form.Group >
-                            <Form.Label>Edad</Form.Label>
+                        <InputGroup className="mb-3" >
+                            <InputGroup.Text>Edad</InputGroup.Text>
                             <Form.Select
                                 aria-label="Selecciona la edad de la mascota"
                                 name="edad"
@@ -63,10 +67,10 @@ function Mipanel(props) {
                                 <option value="adulto">Adulto</option>
                                 <option value="adulto mayor">Adulto Mayor</option>
                             </Form.Select>
-                        </Form.Group>
+                        </InputGroup>
 
-                        <Form.Group >
-                            <Form.Label>Sexo</Form.Label>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text>Sexo</InputGroup.Text>
                             <Form.Select
                                 aria-label="Selecciona el sexo de la mascota"
                                 name="sexo"
@@ -77,24 +81,24 @@ function Mipanel(props) {
                                 <option value="hembra">Hembra</option>
                                 <option value="macho">Macho</option>
                             </Form.Select>
-                        </Form.Group>
+                        </InputGroup>
 
-                        <Form.Group >
-                            <Form.Label>Especie</Form.Label>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text>Especie</InputGroup.Text>
                             <Form.Select
                                 aria-label="Selecciona la especie de la mascota"
                                 name="especie"
                                 id="especie"
                                 value={mascotas.especie}
                                 onChange={guardarCambios}>
-                                <option value="seleccione">seleccione</option>
+                                <option value="seleccione">Seleccione</option>
                                 <option value="perro">Perro</option>
                                 <option value="gato">Gato</option>
                             </Form.Select>
-                        </Form.Group>
+                        </InputGroup>
 
-                        <Form.Group >
-                            <Form.Label>Tamaño</Form.Label>
+                        <InputGroup className="mb-3" >
+                            <InputGroup.Text>Tamaño</InputGroup.Text>
                             <Form.Select
                                 aria-label="Ingresa tamaño de la mascota"
                                 name="tamaño"
@@ -106,10 +110,10 @@ function Mipanel(props) {
                                 <option value="mediano">Mediano</option>
                                 <option value="grande">Grande</option>
                             </Form.Select>
-                        </Form.Group>
+                        </InputGroup>
 
-                        <Form.Group >
-                            <Form.Label>Raza</Form.Label>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text>Raza</InputGroup.Text>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingresa raza de la mascota"
@@ -118,10 +122,10 @@ function Mipanel(props) {
                                 value={mascotas.raza}
                                 onChange={guardarCambios}
                             />
-                        </Form.Group>
+                        </InputGroup>
 
-                        <Form.Group >
-                            <Form.Label>Descripcion</Form.Label>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text>Descripcion</InputGroup.Text>
                             <Form.Control
                                 type="text"
                                 placeholder="Ingresa Descripcion de la mascota"
@@ -130,25 +134,17 @@ function Mipanel(props) {
                                 value={mascotas.descripcion}
                                 onChange={guardarCambios}
                             />
-                        </Form.Group>
-                        <div onSubmit={guardarImagen}>
-                            <Form.Group>
-                                <Form.Label>Imagen</Form.Label>
-                                <Form.Control type="file"
-                                    name="imagen"
-                                    id="imagen"
-                                    onChange={guardarImagen}
-                                />
-                            </Form.Group>
-                        </div>
-
+                        </InputGroup>
+                        <br/>
+                        <div style={{display:"flex", justifyContent:"center"}}>
                         <Button variant="primary" type="submit" onClick={manejoenvio}>
                             Enviar
                         </Button>
-
+                        </div>
                     </Form>
                 </Card.Body>
             </Card>
+            </div>
             {
                 lista.length === 0
                     ? <h6>No ha dado en adopcion</h6>
@@ -181,7 +177,7 @@ function Mipanel(props) {
                                             <td>{a.tamaño}</td>
                                             <td>{a.raza}</td>
                                             <td>{a.descripcion}</td>
-                                            <td>{a.imagen}</td>
+                                            <td>{a.url}</td>
                                             <td><Button variant="success" onClick={() => modificar(a.id)}>Modificar</Button></td>
                                             <td><Button variant="danger" onClick={() => eliminar(a.id)}>Eliminar</Button></td>
                                         </tr>
@@ -191,8 +187,10 @@ function Mipanel(props) {
                             </tbody>
                         </Table>
                     </div>
-            }
+            }    
+            
         </div>
+        
     )
 }
 

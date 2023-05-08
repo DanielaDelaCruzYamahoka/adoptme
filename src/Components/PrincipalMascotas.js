@@ -2,23 +2,24 @@
 import Mascotas from './Mascotas';
 import Mipanel from './Mipanel';
 import React, { useState } from 'react';
-import { Button, Card, Dropdown } from 'react-bootstrap/';
-import perro1 from '../istock.jpg'
-import Navegacion from './Navegacion';
-import { useContext } from 'react';
 import FirebaseProvider, { FirebaseContext } from '../Context/FirebaseContext';
-
+import FooterIndex from './FooterIndex';
+import Header from './Header';
+import Navegacion from './Navegacion';
 function PrincipalMascotas(props) {
-  
-  //------------------------------Para mostrar las mascotas (Mascotas)
-  
-
 
   return (
     <FirebaseProvider>
       <div>
+        <Header
+            texto1="Bienvenido"
+            texto2="Mi Panel"
+        />
+        <Navegacion
+        etiqueta={<a>Aquí van los links de navegacion</a>} />
         <Mipanel/>
         <Mascotas />
+        <FooterIndex/>
       </div>
     </FirebaseProvider>
 
