@@ -6,7 +6,9 @@ import { uploudFile, deleteFile } from '../Settings/ConfigFirebase.js';
 
 export const FirebaseContext = createContext();
 
+
 const FirebaseProvider = (props) => {
+
 
     //------------------------------Para ingresar, eliminar y modificar una mascota (Mipanel)
 
@@ -24,44 +26,44 @@ const FirebaseProvider = (props) => {
     })
 
     const [lista, setlista] = useState([]);
-    const [habilitado, sethabilitado]=useState(false);
-        //useState para imagen
-    const [file, setFile]= useState(null)
-    const [urlimagen, seturlimagen]=useState(null)
-        //funcion para que me arroje una url de la imagen como resultado
-    const handleSubmit= async () => {
+    const [habilitado, sethabilitado] = useState(false);
+    //useState para imagen
+    const [file, setFile] = useState(null)
+    const [urlimagen, seturlimagen] = useState(null)
+    //funcion para que me arroje una url de la imagen como resultado
+    const handleSubmit = async () => {
         try {
-        const result = await uploudFile(file)
-        seturlimagen(result)
-        console.log(result)
+            const result = await uploudFile(file)
+            seturlimagen(result)
+            console.log(result)
         } catch (error) {
-        console.log(error)
-        alert('Error al subir la imagen, inténtelo de nuevo.')
+            console.log(error)
+            alert('Error al subir la imagen, inténtelo de nuevo.')
         }
     }
 
-        //useffect para la bd
-    useEffect(()=>{
-        firebase.database().ref('RegistroMascotas').on('value', snapshot=>{
-            let listaMascotas=[];
-            snapshot.forEach(row=>{
+    //useffect para la bd
+    useEffect(() => {
+        firebase.database().ref('RegistroMascotas').on('value', snapshot => {
+            let listaMascotas = [];
+            snapshot.forEach(row => {
                 listaMascotas.push({
-                    id:row.key,
-                    nombre:row.val().nombre,
-                    edad:row.val().edad,
-                    sexo:row.val().sexo,
-                    especie:row.val().especie,
-                    tamaño:row.val().tamaño,
-                    raza:row.val().raza,
-                    descripcion:row.val().descripcion,
-                    url:row.val().url
+                    id: row.key,
+                    nombre: row.val().nombre,
+                    edad: row.val().edad,
+                    sexo: row.val().sexo,
+                    especie: row.val().especie,
+                    tamaño: row.val().tamaño,
+                    raza: row.val().raza,
+                    descripcion: row.val().descripcion,
+                    url: row.val().url
                 })
             })
             setlista(listaMascotas)
         })
-    },[])
+    }, [])
     //funciones
-    const guardarImagen=(e)=>{
+    const guardarImagen = (e) => {
         setFile(e.target.files[0])
     }
 
@@ -71,10 +73,10 @@ const FirebaseProvider = (props) => {
 
         const { id, nombre, edad, sexo, especie, tamaño, raza, descripcion, url } = mascotas;
 
-        const vacios = (id.length === 0 && nombre.length === 0 && edad === "seleccione" && sexo === "seleccione" && tamaño === "seleccione" && raza.length === 0 && descripcion.length === 0 && url.length===0) || especie === "seleccione"
+        const vacios = (id.length === 0 && nombre.length === 0 && edad === "seleccione" && sexo === "seleccione" && tamaño === "seleccione" && raza.length === 0 && descripcion.length === 0 && url.length === 0) || especie === "seleccione"
 
         if (!vacios) {
-            firebase.database().ref('RegistroMascotas/'+id).update(mascotas).then(()=>{
+            firebase.database().ref('RegistroMascotas/' + id).update(mascotas).then(() => {
             })
             let temporal = lista;
             temporal = temporal.filter(a => a.id !== id)
@@ -103,41 +105,41 @@ const FirebaseProvider = (props) => {
                 tamaño: '',
                 raza: '',
                 descripcion: '',
-                url:'',
+                url: '',
             })
         }
     };
 
-/*     const guardarImagen = (e) => {
-        const imagenSeleccionada = e.target.files[0];
-        setmascotas({
-            ...mascotas,
-            imagen: URL.createObjectURL(imagenSeleccionada)  // Actualizar el estado de mascotas con la imagen seleccionada
-        });
-
-        const formData = new FormData();
-        formData.append('imagen', imagenSeleccionada);
-
-
-        fetch('/guardar-imagen', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                setmascotas({
-                    ...mascotas,
-                    imagen: data.url // Actualizar el estado de mascotas con la URL de la imagen
-                });
+    /*     const guardarImagen = (e) => {
+            const imagenSeleccionada = e.target.files[0];
+            setmascotas({
+                ...mascotas,
+                imagen: URL.createObjectURL(imagenSeleccionada)  // Actualizar el estado de mascotas con la imagen seleccionada
+            });
+    
+            const formData = new FormData();
+            formData.append('imagen', imagenSeleccionada);
+    
+    
+            fetch('/guardar-imagen', {
+                method: 'POST',
+                body: formData
             })
-            .catch(error => console.error(error));
-    }; */
-    const eliminar=async(id,url)=>{
+                .then(response => response.json())
+                .then(data => {
+                    setmascotas({
+                        ...mascotas,
+                        imagen: data.url // Actualizar el estado de mascotas con la URL de la imagen
+                    });
+                })
+                .catch(error => console.error(error));
+        }; */
+    const eliminar = async (id, url) => {
         try {
-            firebase.database().ref('RegistroMascotas/' + id).set(null).then(()=>{
+            firebase.database().ref('RegistroMascotas/' + id).set(null).then(() => {
                 alert('eliminado');
             })
-            const temporal=lista.filter((a)=>a.id!==a.id)
+            const temporal = lista.filter((a) => a.id !== a.id)
             setlista(temporal)
             await deleteFile(url)
         } catch (error) {
@@ -168,7 +170,7 @@ const FirebaseProvider = (props) => {
         setmascotas({
             ...mascotas,
             [e.target.name]: e.target.value,
-            url:urlimagen
+            url: urlimagen
         });
 
     }
@@ -189,7 +191,7 @@ const FirebaseProvider = (props) => {
     const [tarjetassexo, setarjetassexo] = useState([]);
     //Para guardar las tarjetas
     const [tarjetasfinales, setarjetasfinales] = useState([]);
-
+    
 
 
     function tarjetasmascotas(eventKey, event) {
@@ -284,32 +286,55 @@ const FirebaseProvider = (props) => {
     //Perfil de la mascota
     const [mascotaperfil, setMascotaPerfil] = useState([]);
 
-
     function botonfiltros() {
+
+
         sethabilitado(true)
+
         setMascotasFiltradas({
             ...mascotasFiltradas
         })
 
-        // Generar tarjetas
-        const tarjetas = mascotasFiltradas.map((mascota, index) => (
-            <Card key={index} className="card" style={{ width: '18rem'}}>
-                <Card.Img variant="top" src={mascota.url} />
-                <Card.Body>
-                    <Card.Title>{mascota.nombre}</Card.Title>
-                    <Card.Text>
-                        {mascota.especie}<br/> 
-                        {mascota.edad} <br/>
-                        {mascota.tamaño} <br/>
-                        {mascota.sexo}
-                    </Card.Text>
-                    <Button variant="primary" onClick={() => {setModalShow(true); setMascotaPerfil(mascota);}}>Perfil</Button>
-                </Card.Body>
-            </Card>
-        ));
-        setarjetasfinales(tarjetas)
+        if (mascotasFiltradas !== 0) {
+            // Generar tarjetas
+            const tarjetas = mascotasFiltradas.map((mascota, index) => (
+                <Card key={index} className="card" style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={mascota.url} />
+                    <Card.Body>
+                        <Card.Title>{mascota.nombre}</Card.Title>
+                        <Card.Text>
+                            {mascota.especie}<br />
+                            {mascota.edad} <br />
+                            {mascota.tamaño} <br />
+                            {mascota.sexo}
+                        </Card.Text>
+                        <Button variant="primary" onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                    </Card.Body>
+                </Card>
+            ));
+            setarjetasfinales(tarjetas)
+        }
+        else {
+            const tarjetas = lista.map((mascota, index) => (
+                <Card key={index} className="card" style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={mascota.url} />
+                    <Card.Body>
+                        <Card.Title>{mascota.nombre}</Card.Title>
+                        <Card.Text>
+                            {mascota.especie}<br />
+                            {mascota.edad} <br />
+                            {mascota.tamaño} <br />
+                            {mascota.sexo}
+                        </Card.Text>
+                        <Button variant="primary" onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                    </Card.Body>
+                </Card>
+            ));
+            setarjetasfinales(tarjetas)
+        }
+
         
-        
+
 
         //Todo esto es para que simpien las cosas despues de una busqueda nose si dejar esto
         
@@ -319,13 +344,12 @@ const FirebaseProvider = (props) => {
         setarjetastamaño([]);
         setarjetassexo([]);
         setEspecieSeleccionada("Especie");
-        setEdadSeleccionada("Sexo");
+        setEdadSeleccionada("Edad");
         setTamañoSeleccionada("Tamaño");
         setSexoSeleccionada("Sexo");
+        
 
     }
-
-
     
 
     return (
@@ -343,13 +367,18 @@ const FirebaseProvider = (props) => {
                 mascotaperfil,
                 modalShow,
                 setModalShow,
+                setMascotaPerfil,
+
+
 
 
                 mascotasFiltradas,
+                setMascotasFiltradas,
                 tarjetasmascotasedad,
                 botonfiltros,
                 tarjetasfinales,
                 tarjetasmascotassexo,
+
 
                 especieSeleccionada,
                 edadSeleccionada,

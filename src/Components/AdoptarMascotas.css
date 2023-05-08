@@ -1,0 +1,15 @@
+.BotonesFiltros{
+	display: flex;
+    flex-Direction: row;
+    justify-content: center;
+    margin: 10px;
+    gap: 10px;
+    
+}
+.botoneviar{
+    display: flex;
+    flex-Direction: row;
+    justify-content: center;
+    margin: 10px;
+    gap: 10px;
+}
