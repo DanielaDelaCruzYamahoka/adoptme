@@ -4,34 +4,29 @@ import logo from "../logoadoptme.png";
 import { Link } from "react-router-dom";
 import {Form, Image} from 'react-bootstrap/';
 
-function Header(props) {
+function HeaderII(props) {
   return (
     <section>
       <header className="navbar" >
         
-        <Link to={"/Index"}>
+        <Link to={"/Mipanel"}>
           <Image className="logo" src={logo}/>
         </Link>
 
         <nav className="Principal">
-          <Link to={"/registro"} className="NavPrimary">
-            <Form.Label >
-            Registrarme
-            </Form.Label>
-          </Link>
-          <Link to={"/InicioSesion"}>
+          <Link to={"/Adoptar"}>
           <Form.Label>
-            Iniciar Sesión
-          </Form.Label>
-          </Link>
-          <Link to={"/"}>
-          <Form.Label>
-            Mascotas
+            Adoptar
           </Form.Label> 
           </Link>
-          <Link to={"/Nosotros"}>
+          <Link to={"/Contacto"}>
           <Form.Label>
-            Nosotros
+          Contáctanos
+          </Form.Label>
+          </Link>
+          <Link to={"/Mipanel"}>
+          <Form.Label>
+          Mi panel
           </Form.Label>
           </Link>
         </nav>
@@ -47,4 +42,4 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default HeaderII;

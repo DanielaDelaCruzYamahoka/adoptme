@@ -1,5 +1,5 @@
 import FooterIndex from './FooterIndex';
-import Header from './Header';
+import HeaderII from './HeaderII';
 import Navegacion from './Navegacion';
 import AdoptarMascotas from './AdoptarMascotas';
 import {Button, Card, Dropdown, InputGroup, Form, Table} from 'react-bootstrap/';
@@ -10,7 +10,7 @@ function Adoptar(){
     return(
         <FirebaseProvider>
         <div>
-            <Header
+            <HeaderII
                texto1="Bienvenido"
                texto2="Adoptar"
             />

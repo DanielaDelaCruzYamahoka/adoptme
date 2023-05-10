@@ -3,15 +3,30 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
 import { useContext } from 'react';
 import { FirebaseContext } from '../Context/FirebaseContext';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 function Mipanel(props) {
     const { lista, mascotas, manejoenvio, guardarImagen, eliminar, modificar, guardarCambios,handleSubmit } = useContext(FirebaseContext);
-
+    const nombre=cookies.get("nombre")
+    const apellidoP=cookies.get("apellidoP")
+    const apellidoM=cookies.get("apellidoM")
+    const username=cookies.get("username")
+    const cerrarSesion=()=>{
+        cookies.remove('username', {path:"/"})
+        window.location.href='/Index'
+    }
     return (
 
         <div>
             <div style={{display:"flex",justifyContent:"space-around", flexFlow:"row-wrap", alignItems:"stretch"}}>
-                
+                <div style={{display:"flex", flexFlow:"column", alignItems:"center", padding:"15px"}} >
+                    <h4>{nombre} {apellidoP} {apellidoM}</h4>
+                    <p>{username}</p>
+                    <Button className="mb-2" variant="outline-secondary">Información personal</Button>
+                    <Button className="mb-2" variant="outline-danger" onClick={()=>cerrarSesion()}>Cerrar Sesión</Button>                    
+                </div>
+
                 <Card>
                 <Card.Body>
                     <Card.Title>Ingresar Mascota</Card.Title>
@@ -179,7 +194,7 @@ function Mipanel(props) {
                                             <td>{a.descripcion}</td>
                                             <td>{a.url}</td>
                                             <td><Button variant="success" onClick={() => modificar(a.id)}>Modificar</Button></td>
-                                            <td><Button variant="danger" onClick={() => eliminar(a.id)}>Eliminar</Button></td>
+                                            <td><Button variant="danger" onClick={() => eliminar(a.id, a.url)}>Eliminar</Button></td>
                                         </tr>
                                     )
                                 }

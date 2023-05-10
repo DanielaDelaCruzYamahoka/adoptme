@@ -1,5 +1,5 @@
 import FooterIndex from './FooterIndex';
-import Header from './Header';
+import HeaderII from './HeaderII';
 import Navegacion from './Navegacion';
 import chihuahua from '../chihuahua.png'
 import './EstiloFormularios.css'
@@ -7,7 +7,7 @@ import './EstiloFormularios.css'
 function Contacto() {
     return (
       <div>
-        <Header
+        <HeaderII
         texto1="Bienvenido"
         texto2="Contacto"
         />

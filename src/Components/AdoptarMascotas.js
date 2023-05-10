@@ -9,10 +9,10 @@ function AdoptarMascotas() {
 
 
 
-  const { tarjetasmascotas, modalShow, setModalShow,
+  const { tarjetasmascotas2, modalShow, setModalShow,
     especieSeleccionada, edadSeleccionada, TamañoSeleccionada,
-    SexoSeleccionada, tarjetasmascotasedad, botonfiltros,
-    tarjetasfinales, tarjetasmascotastamaño, tarjetasmascotassexo, mascotaperfil,
+    SexoSeleccionada, tarjetasmascotasedad2, botonfiltros2,
+    tarjetasfinales, tarjetasmascotastamaño2, tarjetasmascotassexo2, mascotaperfil,
     lista,setMascotaPerfil } = useContext(FirebaseContext);
   
   return (
@@ -22,7 +22,7 @@ function AdoptarMascotas() {
       </div>
 
       <div className='BotonesFiltros'>
-        <Dropdown onSelect={tarjetasmascotas}>
+        <Dropdown onSelect={tarjetasmascotas2}>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             {especieSeleccionada}
           </Dropdown.Toggle>
@@ -33,7 +33,7 @@ function AdoptarMascotas() {
           </Dropdown.Menu>
         </Dropdown>
         <br></br>
-        <Dropdown onSelect={tarjetasmascotasedad}>
+        <Dropdown onSelect={tarjetasmascotasedad2}>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             {edadSeleccionada}
           </Dropdown.Toggle>
@@ -45,7 +45,7 @@ function AdoptarMascotas() {
           </Dropdown.Menu>
         </Dropdown>
         <br></br>
-        <Dropdown onSelect={tarjetasmascotastamaño}>
+        <Dropdown onSelect={tarjetasmascotastamaño2}>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             {TamañoSeleccionada}
           </Dropdown.Toggle>
@@ -57,7 +57,7 @@ function AdoptarMascotas() {
           </Dropdown.Menu>
         </Dropdown>
         <br></br>
-        <Dropdown onSelect={tarjetasmascotassexo}>
+        <Dropdown onSelect={tarjetasmascotassexo2}>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             {SexoSeleccionada}
           </Dropdown.Toggle>
@@ -71,7 +71,7 @@ function AdoptarMascotas() {
         
       </div>
       <div className='botoneviar'>
-      <Button variant="primary" onClick={() => botonfiltros()}>Buscar</Button>
+      <Button variant="primary" onClick={() => botonfiltros2()}>Buscar</Button>
       </div>
 
       

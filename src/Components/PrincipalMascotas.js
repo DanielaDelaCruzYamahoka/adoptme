@@ -4,14 +4,14 @@ import Mipanel from './Mipanel';
 import React, { useState } from 'react';
 import FirebaseProvider, { FirebaseContext } from '../Context/FirebaseContext';
 import FooterIndex from './FooterIndex';
-import Header from './Header';
+import HeaderII from './HeaderII';
 import Navegacion from './Navegacion';
 function PrincipalMascotas(props) {
 
   return (
     <FirebaseProvider>
       <div>
-        <Header
+        <HeaderII
             texto1="Bienvenido"
             texto2="Mi Panel"
         />
