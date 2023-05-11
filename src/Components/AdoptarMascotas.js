@@ -6,9 +6,6 @@ import './AdoptarMascotas.css'
 
 
 function AdoptarMascotas() {
-
-
-
   const { tarjetasmascotas, modalShow, setModalShow,
     especieSeleccionada, edadSeleccionada, TamañoSeleccionada,
     SexoSeleccionada, tarjetasmascotasedad, botonfiltros,
@@ -20,10 +17,10 @@ function AdoptarMascotas() {
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
         <h2>Encuentra a tu nuevo compañero</h2>
       </div>
-
+      {/* #c59edb morado #8fc9ff azul*/}
       <div className='BotonesFiltros'>
         <Dropdown onSelect={tarjetasmascotas}>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <Dropdown.Toggle variant="success" style={{ backgroundColor: '#c59edb',border: 'none' }} id="dropdown-basic">
             {especieSeleccionada}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -34,7 +31,7 @@ function AdoptarMascotas() {
         </Dropdown>
         <br></br>
         <Dropdown onSelect={tarjetasmascotasedad}>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <Dropdown.Toggle variant="success" style={{ backgroundColor: '#c59edb',border: 'none' }} id="dropdown-basic">
             {edadSeleccionada}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -46,7 +43,7 @@ function AdoptarMascotas() {
         </Dropdown>
         <br></br>
         <Dropdown onSelect={tarjetasmascotastamaño}>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <Dropdown.Toggle variant="success" style={{ backgroundColor: '#c59edb',border: 'none' }} id="dropdown-basic">
             {TamañoSeleccionada}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -58,7 +55,7 @@ function AdoptarMascotas() {
         </Dropdown>
         <br></br>
         <Dropdown onSelect={tarjetasmascotassexo}>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <Dropdown.Toggle variant="success" style={{ backgroundColor: '#c59edb',border: 'none' }} id="dropdown-basic">
             {SexoSeleccionada}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -71,56 +68,55 @@ function AdoptarMascotas() {
         
       </div>
       <div className='botoneviar'>
-      <Button variant="primary" onClick={() => botonfiltros()}>Buscar</Button>
+      <Button  style={{ backgroundColor: '#8fc9ff', bordercolor:'#8fc9ff', color: 'black',border: 'none' }} onClick={() => botonfiltros()}>Buscar</Button>
       </div>
 
       
 
-      <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around" }}>
+      <div className='contenedortarjetas'>
         
         {tarjetasfinales.length===0?
         (lista.map((mascota, index) => (
-            <Card key={index} className="card" style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={mascota.url} />
-                <Card.Body>
-                    <Card.Title>{mascota.nombre}</Card.Title>
+            <Card key={index} className='cardt'>
+                <Card.Img variant="top" className='cardimg' src={mascota.url} />
+                <Card.Body className='cardBody'>
+                    <Card.Title >{mascota.nombre}</Card.Title>
                     <Card.Text>
-                        {mascota.especie}<br />
-                        {mascota.edad} <br />
-                        {mascota.tamaño} <br />
-                        {mascota.sexo}
+                        Raza: {mascota.raza}
                     </Card.Text>
-                    <Button variant="primary" onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                    <Button variant="primary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
                 </Card.Body>
             </Card>
         ))):tarjetasfinales}
         
         {modalShow ? (
-          <div style={{ width: '500px', height: '500px' }}>
-            <Modal show={modalShow} onHide={() => setModalShow(false)}
-              size="lg"
+          <div>
+            <Modal  show={modalShow} onHide={() => setModalShow(false)}
+              size="md"
               aria-labelledby="contained-modal-title-vcenter"
               centered
             >
-              <Modal.Header closeButton  >
-                <Modal.Title>{mascotaperfil.nombre}</Modal.Title>
+              <Modal.Header style={{ backgroundColor: '#c59edb' }} closeButton  >
+                <Modal.Title>{mascotaperfil.nombre.toUpperCase()}</Modal.Title>
               </Modal.Header>
-              <Modal.Body>
+              <Modal.Body style={{ backgroundColor: '' }}>
                 <div className="container">
                   <div className="image">
                     <img src={mascotaperfil.url} alt={mascotaperfil.nombre} />
                   </div>
                   <div className="info">
-                    <p>Edad: {mascotaperfil.edad}</p>
-                    <p>Tamaño: {mascotaperfil.tamaño}</p>
-                    <p>Sexo: {mascotaperfil.sexo}</p>
+                  <p><strong>Edad:</strong> <span style={{textTransform: 'capitalize'}}>{mascotaperfil.edad}</span></p>
+                  <p><strong>Sexo:</strong> <span style={{textTransform: 'capitalize'}}>{mascotaperfil.sexo}</span></p>
+                  <p><strong>Tamaño:</strong> <span style={{textTransform: 'capitalize'}}>{mascotaperfil.tamaño}</span></p>
+                  <p><strong>Especie:</strong> <span style={{textTransform: 'capitalize'}}>{mascotaperfil.especie}</span></p>
+                  <p><strong>Raza:</strong> <span style={{textTransform: 'capitalize'}}>{mascotaperfil.raza}</span></p>
                   </div>
                 </div>
-                <p style={{ marginBottom: "0.1rem" }}>Descripcion: </p>
-                <p style={{ marginTop: "0" }}>{mascotaperfil.descripcion}</p>
+                <p style={{ marginBottom: "0.1rem",fontWeight: 'bold' }}>Descripcion: </p>
+                <p style={{ marginTop: "0",textTransform: 'capitalize' }}>{mascotaperfil.descripcion}</p>
               </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={() => setModalShow(false)}>
+              <Modal.Footer style={{ backgroundColor: '' }}>
+                <Button variant="secondary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => setModalShow(false)}>
                   Cerrar
                 </Button>
               </Modal.Footer>
