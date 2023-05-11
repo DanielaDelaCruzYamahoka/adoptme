@@ -3,6 +3,9 @@ import firebase from '../Settings/ConfigFirebase.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
 import InicioSesion from '../Components/InicioSesion';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+//los cookies nos ayudan a mandar los atributos del usuario a mi panel
 
 function SesionUsuarios(){
         //states para los usuarios
@@ -49,6 +52,11 @@ function SesionUsuarios(){
                     'error'
                   )
             }else{
+                cookies.set('nombre', buscarusuario.nombre, {path:"/"})
+                cookies.set('apellidoP', buscarusuario.apellidoP, {path:"/"})
+                cookies.set('apellidoM', buscarusuario.apellidoM, {path:"/"})
+                cookies.set('username', buscarusuario.usuario, {path:"/"})
+                //hacemos accesible el nombre de usuario en cualquier página después de iniciar sesión
                 Swal.fire(
                 '¡Bienvenido!',
                 ':)',

@@ -53,9 +53,16 @@
     */
 }
 
-.BF {
-    background-Color: '#8fc9ff' !important;
-    color: white !important;
+.botondefiltros {
+    background-Color: #c59edb;
+    border: none;
+    
+
+}
+.botondebusc {
+    background-Color: #8fc9ff;
+    border: none;
+    color: black;
 
 }
 
@@ -73,6 +80,7 @@
 .cardt {
     width: 18rem;
     height: 350px;
+    margin-bottom: 1%;
 }
 
 .contenedortarjetas {

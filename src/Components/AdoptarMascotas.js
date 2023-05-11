@@ -6,10 +6,13 @@ import './AdoptarMascotas.css'
 
 
 function AdoptarMascotas() {
-  const { tarjetasmascotas, modalShow, setModalShow,
+
+
+
+  const { tarjetasmascotas2, modalShow, setModalShow,
     especieSeleccionada, edadSeleccionada, TamañoSeleccionada,
-    SexoSeleccionada, tarjetasmascotasedad, botonfiltros,
-    tarjetasfinales, tarjetasmascotastamaño, tarjetasmascotassexo, mascotaperfil,
+    SexoSeleccionada, tarjetasmascotasedad2, botonfiltros2,
+    tarjetasfinales, tarjetasmascotastamaño2, tarjetasmascotassexo2, mascotaperfil,
     lista,setMascotaPerfil } = useContext(FirebaseContext);
   
   return (
@@ -19,8 +22,8 @@ function AdoptarMascotas() {
       </div>
       {/* #c59edb morado #8fc9ff azul*/}
       <div className='BotonesFiltros'>
-        <Dropdown onSelect={tarjetasmascotas}>
-          <Dropdown.Toggle variant="success" style={{ backgroundColor: '#c59edb',border: 'none' }} id="dropdown-basic">
+        <Dropdown onSelect={tarjetasmascotas2}>
+          <Dropdown.Toggle variant="success" className='botondefiltros' id="dropdown-basic">
             {especieSeleccionada}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -30,8 +33,8 @@ function AdoptarMascotas() {
           </Dropdown.Menu>
         </Dropdown>
         <br></br>
-        <Dropdown onSelect={tarjetasmascotasedad}>
-          <Dropdown.Toggle variant="success" style={{ backgroundColor: '#c59edb',border: 'none' }} id="dropdown-basic">
+        <Dropdown onSelect={tarjetasmascotasedad2}>
+          <Dropdown.Toggle variant="success" className='botondefiltros' id="dropdown-basic">
             {edadSeleccionada}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -42,8 +45,8 @@ function AdoptarMascotas() {
           </Dropdown.Menu>
         </Dropdown>
         <br></br>
-        <Dropdown onSelect={tarjetasmascotastamaño}>
-          <Dropdown.Toggle variant="success" style={{ backgroundColor: '#c59edb',border: 'none' }} id="dropdown-basic">
+        <Dropdown onSelect={tarjetasmascotastamaño2}>
+          <Dropdown.Toggle variant="success" className='botondefiltros' id="dropdown-basic">
             {TamañoSeleccionada}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -54,8 +57,8 @@ function AdoptarMascotas() {
           </Dropdown.Menu>
         </Dropdown>
         <br></br>
-        <Dropdown onSelect={tarjetasmascotassexo}>
-          <Dropdown.Toggle variant="success" style={{ backgroundColor: '#c59edb',border: 'none' }} id="dropdown-basic">
+        <Dropdown onSelect={tarjetasmascotassexo2}>
+          <Dropdown.Toggle variant="success" className='botondefiltros' id="dropdown-basic">
             {SexoSeleccionada}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -68,7 +71,7 @@ function AdoptarMascotas() {
         
       </div>
       <div className='botoneviar'>
-      <Button  style={{ backgroundColor: '#8fc9ff', bordercolor:'#8fc9ff', color: 'black',border: 'none' }} onClick={() => botonfiltros()}>Buscar</Button>
+      <Button variant="primary" className='botondebusc' onClick={() => botonfiltros2()}>Buscar</Button>
       </div>
 
       

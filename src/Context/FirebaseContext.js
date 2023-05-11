@@ -1,15 +1,15 @@
 import React, { createContext, useState, useEffect } from "react";
 import { Button, Card, Dropdown, Modal } from 'react-bootstrap';
-import perro1 from '../istock.jpg'
 import firebase from '../Settings/ConfigFirebase.js'
 import { uploudFile, deleteFile } from '../Settings/ConfigFirebase.js';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 export const FirebaseContext = createContext();
 
 
 const FirebaseProvider = (props) => {
-
-
+    const username = cookies.get("username")
     //------------------------------Para ingresar, eliminar y modificar una mascota (Mipanel)
 
     //states
@@ -22,7 +22,8 @@ const FirebaseProvider = (props) => {
         tamaño: "",
         raza: "",
         descripcion: "",
-        url: ""
+        url: "",
+        usuario: ""
     })
 
     const [lista, setlista] = useState([]);
@@ -56,7 +57,8 @@ const FirebaseProvider = (props) => {
                     tamaño: row.val().tamaño,
                     raza: row.val().raza,
                     descripcion: row.val().descripcion,
-                    url: row.val().url
+                    url: row.val().url,
+                    usuario: row.val().usuario
                 })
             })
             setlista(listaMascotas)
@@ -71,7 +73,7 @@ const FirebaseProvider = (props) => {
 
         e.preventDefault();
 
-        const { id, nombre, edad, sexo, especie, tamaño, raza, descripcion, url } = mascotas;
+        const { id, nombre, edad, sexo, especie, tamaño, raza, descripcion, url, usuario } = mascotas;
 
         const vacios = (id.length === 0 && nombre.length === 0 && edad === "seleccione" && sexo === "seleccione" && tamaño === "seleccione" && raza.length === 0 && descripcion.length === 0 && url.length === 0) || especie === "seleccione"
 
@@ -93,6 +95,7 @@ const FirebaseProvider = (props) => {
                     raza,
                     descripcion,
                     url,
+                    usuario
                 },
             ])
 
@@ -106,11 +109,12 @@ const FirebaseProvider = (props) => {
                 raza: '',
                 descripcion: '',
                 url: '',
+                usuario: ''
             })
         }
     };
 
-    
+
     const eliminar = async (id, url) => {
         try {
             firebase.database().ref('RegistroMascotas/' + id).set(null).then(() => {
@@ -118,7 +122,7 @@ const FirebaseProvider = (props) => {
             })
             const temporal = lista.filter((a) => a.id !== a.id)
             setlista(temporal)
-            await deleteFile(url)
+            await deleteFile(url)//checar error (puede ser por internet lento)
         } catch (error) {
             console.log(error)
             alert('Error al eliminar, inténtelo de nuevo.')
@@ -137,7 +141,8 @@ const FirebaseProvider = (props) => {
             tamaño: listatemporall.tamaño,
             raza: listatemporall.raza,
             descripcion: listatemporall.descripcion,
-            url: listatemporall.url
+            url: listatemporall.url,
+            usuario: listatemporall.usuario
         });
 
     }
@@ -147,12 +152,13 @@ const FirebaseProvider = (props) => {
         setmascotas({
             ...mascotas,
             [e.target.name]: e.target.value,
-            url: urlimagen
+            url: urlimagen,
+            usuario: username
         });
 
     }
 
-    //------------------------------Para mostrar las mascotas (Mascotas)
+    //------------------------------Para mostrar las mascotas (Mascotas-Mi Panel)
 
 
     const [especieSeleccionada, setEspecieSeleccionada] = useState("Especies");
@@ -172,6 +178,167 @@ const FirebaseProvider = (props) => {
 
 
     function tarjetasmascotas(eventKey, event) {
+        let mascotasusuario = lista.filter((a, i) => a.usuario === username)
+
+        if (eventKey === "todas") {
+            setMascotasFiltradas(mascotasusuario);
+            setarjetasespecie([]);
+            setEspecieSeleccionada("Todas");
+        } else {
+            const especi = eventKey
+            const tarespe = mascotasusuario.filter(a => a.especie === especi)
+            setarjetasespecie(tarespe)//se utiliza entre las funciones de filtro
+            setEspecieSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setMascotasFiltradas(tarespe);//es el que llamo para generar las tarjetas
+        }
+    }
+    function tarjetasmascotasedad(eventKey, event) {
+        let mascotasusuario = lista.filter((a, i) => a.usuario === username)
+        if (eventKey === "todas") {
+            setMascotasFiltradas(mascotasusuario);
+            setarjetasedad([]);
+            setEdadSeleccionada("Todas");
+
+        } else {
+            const ed = eventKey;
+            const tarjetasedad = mascotasusuario.filter(a => a.edad === ed);
+
+
+            let especieconedad = tarjetasedad;
+            if (tarjetasespecie.length > 0) {
+                especieconedad = tarjetasedad.filter(mascota => {
+                    const especieSeleccionada = tarjetasespecie[0].especie;
+                    return mascota.especie === especieSeleccionada;
+                });
+            }
+
+            setMascotasFiltradas(especieconedad);//es el que llamo para generar las tarjetas
+            setEdadSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setarjetasedad(especieconedad)//se utiliza entre las funciones de filtro
+        }
+    }
+
+    function tarjetasmascotastamaño(eventKey, event) {
+        let mascotasusuario = lista.filter((a, i) => a.usuario === username)
+        if (eventKey === "todas") {
+            setMascotasFiltradas(mascotasusuario);
+            setarjetastamaño([]);
+            setTamañoSeleccionada("Todas");
+
+        } else {
+            const tam = eventKey;
+            const tarjetastam = mascotasusuario.filter(a => a.tamaño === tam);
+
+            let especiecontam = tarjetastam;
+            if (tarjetasespecie.length > 0 || tarjetasedad.length > 0 || (tarjetasedad.length > 0 && tarjetasespecie.length > 0)) {
+                especiecontam = tarjetastam.filter(mascota => {
+                    const edadSeleccionada = tarjetasedad[0].edad;
+                    return mascota.tamaño === tam && mascota.edad === edadSeleccionada;
+                });
+            }
+
+            setMascotasFiltradas(especiecontam);//es el que llamo para generar las tarjetas
+            setTamañoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setarjetastamaño(especiecontam);//se utiliza entre las funciones de filtro
+        }
+    }
+
+    function tarjetasmascotassexo(eventKey, event) {
+        let mascotasusuario = lista.filter((a, i) => a.usuario === username)
+        if (eventKey === "todas") {
+            setMascotasFiltradas(mascotasusuario);
+            setarjetassexo([]);
+            setSexoSeleccionada("Todas");
+        } else {
+            const sex = eventKey;
+            const tarjetasex = mascotasusuario.filter(a => a.sexo === sex);
+
+            let especieconsex = tarjetasex;
+            if (tarjetasespecie.length > 0 || tarjetasedad.length > 0 || tarjetastamaño.length > 0) {
+                especieconsex = tarjetasex.filter(mascota => {
+                    const especieSeleccionada = tarjetasespecie.length > 0 ? tarjetasespecie[0].especie : true;
+                    const edadSeleccionada = tarjetasedad.length > 0 ? mascota.edad === tarjetasedad[0].edad : true;
+                    const tamañoSeleccionado = tarjetastamaño.length > 0 ? mascota.tamaño === tarjetastamaño[0].tamaño : true;
+                    return mascota.sexo === sex && mascota.especie === especieSeleccionada && edadSeleccionada && tamañoSeleccionado;
+                });
+            }
+
+            setMascotasFiltradas(especieconsex);//es el que llamo para generar las tarjetas
+            setSexoSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
+            setarjetassexo(especieconsex);//se utiliza entre las funciones de filtro
+        }
+    }
+
+    //Para el modal
+    const [modalShow, setModalShow] = useState();
+    //Perfil de la mascota
+    const [mascotaperfil, setMascotaPerfil] = useState([]);
+
+    function botonfiltros() {
+        let mascotasusuario = lista.filter((a, i) => a.usuario === username)
+        sethabilitado(true)
+
+        setMascotasFiltradas({
+            ...mascotasFiltradas
+        })
+
+        if (mascotasFiltradas !== 0) {
+            // Generar tarjetas
+            const tarjetas = mascotasFiltradas.map((mascota, index) => (
+                <Card key={index} className="card" style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={mascota.url} />
+                    <Card.Body>
+                        <Card.Title>{mascota.nombre}</Card.Title>
+                        <Card.Text>
+                            {mascota.especie}<br />
+                            {mascota.edad} <br />
+                            {mascota.tamaño} <br />
+                            {mascota.sexo}
+                        </Card.Text>
+                        <Button variant="primary" onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                    </Card.Body>
+                </Card>
+            ));
+            setarjetasfinales(tarjetas)
+        }
+        else {
+            const tarjetas = mascotasusuario.map((mascota, index) => (
+                <Card key={index} className="card" style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={mascota.url} />
+                    <Card.Body>
+                        <Card.Title>{mascota.nombre}</Card.Title>
+                        <Card.Text>
+                            {mascota.especie}<br />
+                            {mascota.edad} <br />
+                            {mascota.tamaño} <br />
+                            {mascota.sexo}
+                        </Card.Text>
+                        <Button variant="primary" onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                    </Card.Body>
+                </Card>
+            ));
+            setarjetasfinales(tarjetas)
+        }
+        //Todo esto es para que simpien las cosas despues de una busqueda nose si dejar esto
+
+        setMascotasFiltradas(mascotasusuario);
+        setarjetasespecie([]);
+        setarjetasedad([]);
+        setarjetastamaño([]);
+        setarjetassexo([]);
+        setEspecieSeleccionada("Especie");
+        setEdadSeleccionada("Edad");
+        setTamañoSeleccionada("Tamaño");
+        setSexoSeleccionada("Sexo");
+    }
+
+
+    //------------------------------Para mostrar las mascotas (Adoptar) 
+    //Verificar si se puede crear condicional para no repetir código
+
+
+
+    function tarjetasmascotas2(eventKey, event) {
         if (eventKey === "todas") {
             setMascotasFiltradas(lista);
             setarjetasespecie([]);
@@ -182,9 +349,9 @@ const FirebaseProvider = (props) => {
             setarjetasespecie(tarespe)//se utiliza entre las funciones de filtro
             setEspecieSeleccionada(event.target.textContent);// es en el que guardo el que selecciono 
             setMascotasFiltradas(tarespe);//es el que llamo para generar las tarjetas
-        } 
+        }
     }
-    function tarjetasmascotasedad(eventKey, event) {
+    function tarjetasmascotasedad2(eventKey, event) {
         if (eventKey === "todas") {
             setMascotasFiltradas(lista);
             setarjetasedad([]);
@@ -209,7 +376,7 @@ const FirebaseProvider = (props) => {
         }
     }
 
-    function tarjetasmascotastamaño(eventKey, event) {
+    function tarjetasmascotastamaño2(eventKey, event) {
         if (eventKey === "todas") {
             setMascotasFiltradas(lista);
             setarjetastamaño([]);
@@ -233,7 +400,7 @@ const FirebaseProvider = (props) => {
         }
     }
 
-    function tarjetasmascotassexo(eventKey, event) {
+    function tarjetasmascotassexo2(eventKey, event) {
         if (eventKey === "todas") {
             setMascotasFiltradas(lista);
             setarjetassexo([]);
@@ -258,42 +425,47 @@ const FirebaseProvider = (props) => {
         }
     }
 
-    //Para el modal
-    const [modalShow, setModalShow] = useState();
-    //Perfil de la mascota
-    const [mascotaperfil, setMascotaPerfil] = useState([]);
-
-    function botonfiltros() {
-
-
-        sethabilitado(true)
-
+    function botonfiltros2() {
         setMascotasFiltradas({
             ...mascotasFiltradas
         })
 
-
-        // Generar tarjetas
-        const tarjetas = mascotasFiltradas.map((mascota, index) => (
-            <Card key={index} className='cardt'>
-                <Card.Img variant="top"className='cardimg' src={mascota.url} />
-                <Card.Body className='cardBody'>
-                    <Card.Title>{mascota.nombre}</Card.Title>
-                    <Card.Text>
-                    Raza: {mascota.raza}
-                    </Card.Text>
-                    <Button  style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
-                </Card.Body>
-            </Card>
-        ));
-        setarjetasfinales(tarjetas)
-        
-
-        //Todo esto es para que simpien las cosas despues de una busqueda nose si dejar esto
-
-        if(mascotasFiltradas.length===0){
-            alert("Mascota no encontrada con esos filtros")
+        if (mascotasFiltradas !== 0) {
+            // Generar tarjetas
+            const tarjetas = mascotasFiltradas.map((mascota, index) => (
+                    
+                    <Card key={index} className='cardt'>
+                        <Card.Img variant="top"className='cardimg' src={mascota.url} />
+                        <Card.Body className='cardBody'>
+                            <Card.Title>{mascota.nombre}</Card.Title>
+                            <Card.Text>
+                             Raza: {mascota.raza}
+                            </Card.Text>
+                            <Button variant="primary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                        </Card.Body>
+                    </Card>
+            ));
+            setarjetasfinales(tarjetas)
         }
+        else {
+            const tarjetas = lista.map((mascota, index) => (
+                <Card key={index} className="card" style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={mascota.url} />
+                    <Card.Body>
+                        <Card.Title>{mascota.nombre}</Card.Title>
+                        <Card.Text>
+                            {mascota.especie}<br />
+                            {mascota.edad} <br />
+                            {mascota.tamaño} <br />
+                            {mascota.sexo}
+                        </Card.Text>
+                        <Button variant="primary" onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                    </Card.Body>
+                </Card>
+            ));
+            setarjetasfinales(tarjetas)
+        }
+        //Todo esto es para que simpien las cosas despues de una busqueda nose si dejar esto
 
         setMascotasFiltradas(lista);
         setarjetasespecie([]);
@@ -304,10 +476,7 @@ const FirebaseProvider = (props) => {
         setEdadSeleccionada("Edad");
         setTamañoSeleccionada("Tamaño");
         setSexoSeleccionada("Sexo");
-
-        
     }
-
 
     return (
         <FirebaseContext.Provider
@@ -325,6 +494,13 @@ const FirebaseProvider = (props) => {
                 modalShow,
                 setModalShow,
                 setMascotaPerfil,
+
+                tarjetasmascotas2,
+                tarjetasmascotastamaño2,
+                tarjetasmascotasedad2,
+                tarjetasmascotassexo2,
+                botonfiltros2,
+
                 mascotasFiltradas,
                 setMascotasFiltradas,
                 tarjetasmascotasedad,
