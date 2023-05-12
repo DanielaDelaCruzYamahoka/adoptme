@@ -1,3 +1,4 @@
+import React, {useRef} from 'react';
 import FooterIndex from './FooterIndex';
 import HeaderII from './HeaderII';
 import Navegacion from './Navegacion';
@@ -6,8 +7,24 @@ import './EstiloFormularios.css'
 import { Button, Card, Dropdown, InputGroup, Form, Table, Image } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Contacto.css';
+import emailjs from '@emailjs/browser';
 
 function Contacto() {
+
+    const refForm =useRef();
+
+    const handleSubmit = (event) =>{
+        event.preventDefault();
+
+        const serviceId="service_qq9jjgs";
+        const templateId= "template_fxd83hs";
+
+        const apikey="uBitAKN8y8TYrdpBV";
+        emailjs.sendForm(serviceId,templateId,refForm.current,apikey)
+        .then(result=> {console.log(result.text); refForm.current.reset()})
+        .catch(error=> console.log(error))
+    }
+
     return (
         <div >
             <HeaderII
@@ -21,7 +38,7 @@ function Contacto() {
                     <Card.Body>
                         <Card.Title>Contactenos</Card.Title>
                         <Card.Text>Mandenos un mensaje por este medio y atenderemos su duda.</Card.Text>
-                        <Form /*onSubmit={manejoenvio}*/>
+                        <Form ref={refForm} onSubmit={handleSubmit}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Text>Nombre</InputGroup.Text>
                                 <Form.Control
@@ -29,8 +46,7 @@ function Contacto() {
                                     placeholder="Nombre"
                                     name="nombre"
                                     id="nombre"
-                                //value={mascotas.id}
-                                //onChange={guardarCambios}
+                                    required
                                 />
                             </InputGroup>
 
@@ -41,8 +57,7 @@ function Contacto() {
                                     placeholder="Apellido"
                                     name="apellido"
                                     id="apellido"
-                                //value={mascotas.nombre}
-                                //onChange={guardarCambios}
+                                    required
                                 />
                             </InputGroup>
 
@@ -53,8 +68,6 @@ function Contacto() {
                                     placeholder="Telefono"
                                     name="telefono"
                                     id="telefono"
-                                //value={mascotas.raza}
-                                //onChange={guardarCambios}
                                 />
                             </InputGroup>
 
@@ -65,8 +78,7 @@ function Contacto() {
                                     placeholder="Correo"
                                     name="correo"
                                     id="correo"
-                                //value={mascotas.descripcion}
-                                //onChange={guardarCambios}
+                                    required
                                 />
                             </InputGroup>
                             <InputGroup className="mb-3">
@@ -76,9 +88,8 @@ function Contacto() {
                                     placeholder="Ingresa el mensaje que nos deseas transmitir"
                                     name="mensaje"
                                     id="mensaje"
+                                    required
                                     style={{ height: "200px", width: "100%" }}
-                                //value={mascotas.descripcion}
-                                //onChange={guardarCambios}
                                 />
                             </InputGroup>
                             <br />
