@@ -1,19 +1,25 @@
 import { Button, Card, Dropdown, Modal } from 'react-bootstrap';
 import { useContext, useEffect } from 'react';
 import { FirebaseContext } from '../Context/FirebaseContext';
+import { AdopcionesContext } from '../Context/AdopcionesContext';
 import './AdoptarMascotas.css'
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 
 
 function AdoptarMascotas() {
-
-
-
+  const {botonadoptar, notificaciones,guardarmensaje}=useContext(AdopcionesContext);
   const { tarjetasmascotas2, modalShow, setModalShow,
     especieSeleccionada, edadSeleccionada, TamañoSeleccionada,
     SexoSeleccionada, tarjetasmascotasedad2, botonfiltros2,
     tarjetasfinales, tarjetasmascotastamaño2, tarjetasmascotassexo2, mascotaperfil,
     lista,setMascotaPerfil } = useContext(FirebaseContext);
+
+    let cont = notificaciones.length +1
+    const username = cookies.get("username")
+
+    
   
   return (
     <div>
@@ -73,9 +79,6 @@ function AdoptarMascotas() {
       <div className='botoneviar'>
       <Button variant="primary" className='botondebusc' onClick={() => botonfiltros2()}>Buscar</Button>
       </div>
-
-      
-
       <div className='contenedortarjetas'>
         
         {tarjetasfinales.length===0?
@@ -87,7 +90,8 @@ function AdoptarMascotas() {
                     <Card.Text>
                         Raza: {mascota.raza}
                     </Card.Text>
-                    <Button variant="primary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                    <Button variant="primary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); guardarmensaje(mascota.nombre, mascota.usuario, mascota.id)}}>Perfil</Button>
+
                 </Card.Body>
             </Card>
         ))):tarjetasfinales}
@@ -119,9 +123,11 @@ function AdoptarMascotas() {
                 <p style={{ marginTop: "0",textTransform: 'capitalize' }}>{mascotaperfil.descripcion}</p>
               </Modal.Body>
               <Modal.Footer style={{ backgroundColor: '' }}>
-                <Button variant="secondary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => setModalShow(false)}>
+                <Button variant="secondary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => {setModalShow(false)}}>
                   Cerrar
                 </Button>
+                <Button variant="primary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={()=>botonadoptar()}>Adoptar</Button>
+
               </Modal.Footer>
             </Modal>
           </div>
