@@ -3,6 +3,7 @@ import { Button, Card, Dropdown, Modal } from 'react-bootstrap';
 import firebase from '../Settings/ConfigFirebase.js'
 import { uploudFile, deleteFile } from '../Settings/ConfigFirebase.js';
 import Cookies from 'universal-cookie';
+import Swal from 'sweetalert2/src/sweetalert2.js'
 const cookies = new Cookies();
 
 export const FirebaseContext = createContext();
@@ -31,15 +32,29 @@ const FirebaseProvider = (props) => {
     //useState para imagen
     const [file, setFile] = useState(null)
     const [urlimagen, seturlimagen] = useState(null)
+    const [imagencargada, setimagencargada] = useState(false);
     //funcion para que me arroje una url de la imagen como resultado
     const handleSubmit = async () => {
         try {
             const result = await uploudFile(file)
             seturlimagen(result)
-            console.log(result)
+            console.log(urlimagen)
+
+            if (result !== " ") {
+                setimagencargada(true);
+                Swal.fire(
+                    'Imagen enviada',
+                    'Ahora puedes enviar los demas datos de la mascotas',
+                    'success'
+                )
+            }
         } catch (error) {
             console.log(error)
-            alert('Error al subir la imagen, inténtelo de nuevo.')
+            Swal.fire(
+                'Error al subir la imagen, inténtelo de nuevo.',
+                'error'
+            )
+
         }
     }
 
@@ -111,6 +126,8 @@ const FirebaseProvider = (props) => {
                 url: '',
                 usuario: ''
             })
+            setimagencargada(false);
+            seturlimagen(null)
         }
     };
 
@@ -433,17 +450,17 @@ const FirebaseProvider = (props) => {
         if (mascotasFiltradas !== 0) {
             // Generar tarjetas
             const tarjetas = mascotasFiltradas.map((mascota, index) => (
-                    
-                    <Card key={index} className='cardt'>
-                        <Card.Img variant="top"className='cardimg' src={mascota.url} />
-                        <Card.Body className='cardBody'>
-                            <Card.Title>{mascota.nombre}</Card.Title>
-                            <Card.Text>
-                             Raza: {mascota.raza}
-                            </Card.Text>
-                            <Button variant="primary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
-                        </Card.Body>
-                    </Card>
+
+                <Card key={index} className='cardt'>
+                    <Card.Img variant="top" className='cardimg' src={mascota.url} />
+                    <Card.Body className='cardBody'>
+                        <Card.Title>{mascota.nombre}</Card.Title>
+                        <Card.Text>
+                            Raza: {mascota.raza}
+                        </Card.Text>
+                        <Button variant="primary" style={{ backgroundColor: '#c59edb', border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                    </Card.Body>
+                </Card>
             ));
             setarjetasfinales(tarjetas)
         }
@@ -476,6 +493,7 @@ const FirebaseProvider = (props) => {
         setEdadSeleccionada("Edad");
         setTamañoSeleccionada("Tamaño");
         setSexoSeleccionada("Sexo");
+
     }
 
     return (
@@ -515,6 +533,7 @@ const FirebaseProvider = (props) => {
 
                 handleSubmit,
                 urlimagen,
+                imagencargada,
 
             }}>
             {props.children}

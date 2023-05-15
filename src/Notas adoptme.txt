@@ -5,6 +5,7 @@ npm install firebase
 npm install sweetalert2
 npm i uuid
 npm i universal-cookie
+npm install @emailjs/browser --save
 
 COSAS QUE HACER (Daniela)
 -(LISTO)Poner otro header después del inicio de sesión
@@ -17,7 +18,7 @@ COSAS QUE HACER (Daniela)
 	+hacer solicitudes de adopción y que el usuario acepte las solicitudes, que den seguimiento ellos mismos
 	+si es que no se logra la adopción, se pueda eliminar la solicitud
 	+hacer un campo para que el usuario pueda habilitar o deshabilitar que se muestre la mascota en Adoptar
--Hacer que funcione Contacto
+-(LISTO)Hacer que funcione Contacto
 
 
 COSAS PARA VERIFICAR (Aracely)

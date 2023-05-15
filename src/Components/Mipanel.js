@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 function Mipanel(props) {
-    const { lista, mascotas, manejoenvio, guardarImagen, eliminar, modificar, guardarCambios,handleSubmit } = useContext(FirebaseContext);
+    const { lista, mascotas, manejoenvio, guardarImagen, eliminar, modificar, guardarCambios,handleSubmit,imagencargada } = useContext(FirebaseContext);
     const nombre=cookies.get("nombre")
     const apellidoP=cookies.get("apellidoP")
     const apellidoM=cookies.get("apellidoM")
@@ -54,6 +54,7 @@ function Mipanel(props) {
                                 id="id"
                                 value={mascotas.id}
                                 onChange={guardarCambios}
+                                
                             />
                         </InputGroup>
 
@@ -66,6 +67,7 @@ function Mipanel(props) {
                                 id="nombre"
                                 value={mascotas.nombre}
                                 onChange={guardarCambios}
+                                
                             />
                         </InputGroup>
 
@@ -76,7 +78,9 @@ function Mipanel(props) {
                                 name="edad"
                                 id="edad"
                                 value={mascotas.edad}
-                                onChange={guardarCambios}>
+                                onChange={guardarCambios}
+                                
+                                >
                                 <option value="Seleccione">Seleccione</option>
                                 <option value="cachorro">Cachorro</option>
                                 <option value="adulto">Adulto</option>
@@ -91,7 +95,8 @@ function Mipanel(props) {
                                 name="sexo"
                                 id="sexo"
                                 value={mascotas.sexo}
-                                onChange={guardarCambios}>
+                                onChange={guardarCambios}
+                                >
                                 <option value="Seleccione">Seleccione</option>
                                 <option value="hembra">Hembra</option>
                                 <option value="macho">Macho</option>
@@ -105,7 +110,8 @@ function Mipanel(props) {
                                 name="especie"
                                 id="especie"
                                 value={mascotas.especie}
-                                onChange={guardarCambios}>
+                                onChange={guardarCambios}
+                                >
                                 <option value="seleccione">Seleccione</option>
                                 <option value="perro">Perro</option>
                                 <option value="gato">Gato</option>
@@ -119,7 +125,8 @@ function Mipanel(props) {
                                 name="tamaño"
                                 id="tamaño"
                                 value={mascotas.tamaño}
-                                onChange={guardarCambios}>
+                                onChange={guardarCambios}
+                                >
                                 <option value="seleccione">Seleccione</option>
                                 <option value="pequeño">Pequeño</option>
                                 <option value="mediano">Mediano</option>
@@ -136,6 +143,7 @@ function Mipanel(props) {
                                 id="raza"
                                 value={mascotas.raza}
                                 onChange={guardarCambios}
+                                
                             />
                         </InputGroup>
 
@@ -148,11 +156,12 @@ function Mipanel(props) {
                                 id="descripcion"
                                 value={mascotas.descripcion}
                                 onChange={guardarCambios}
+                                
                             />
                         </InputGroup>
                         <br/>
                         <div style={{display:"flex", justifyContent:"center"}}>
-                        <Button variant="primary" type="submit" onClick={manejoenvio}>
+                        <Button variant="primary" disabled={!imagencargada} type="submit" onClick={manejoenvio}>
                             Enviar
                         </Button>
                         </div>
