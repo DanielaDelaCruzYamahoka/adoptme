@@ -10,7 +10,7 @@ import { FirebaseContext } from '../Context/FirebaseContext';
 function Mascotas() {
   const { tarjetasmascotas, modalShow, mascotaSeleccionada, setModalShow, selectedTarjetas, seleccionado,
     especieSeleccionada, edadSeleccionada, TamañoSeleccionada, SexoSeleccionada, listaFiltrada, tarjetasmascotasedad,
-    selectedEdad, filtros, botonfiltros, tarjetasfinales, tarjetasmascotastamaño, tarjetasmascotassexo, mascotaperfil } = useContext(FirebaseContext);
+    selectedEdad, filtros, botonfiltros, tarjetasfinales, tarjetasmascotastamaño, tarjetasmascotassexo, mascotaperfil, modificar, eliminar } = useContext(FirebaseContext);
 
     
   return (
@@ -92,6 +92,8 @@ function Mascotas() {
             <p style={{ marginTop: "0" }}>{mascotaperfil.descripcion}</p>
           </Modal.Body>
           <Modal.Footer>
+            <Button variant="success" onClick={() => modificar(mascotaperfil.id)}>Modificar</Button>
+            <Button variant="danger" onClick={() => eliminar(mascotaperfil.id, mascotaperfil.url)}>Eliminar</Button>
             <Button variant="secondary" onClick={() => setModalShow(false)}>
               Cerrar
             </Button>

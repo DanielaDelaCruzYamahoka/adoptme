@@ -209,50 +209,7 @@ function Mipanel(props) {
                     </Form>
                 </Card.Body>
             </Card>
-            </div>
-            {
-                lista.length === 0
-                    ? <h6>No ha dado en adopcion</h6>
-                    :
-                    <div>
-                        <Table striped bordered hover size="sm">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Edad</th>
-                                    <th>Sexo</th>
-                                    <th>Especie</th>
-                                    <th>Tamaño</th>
-                                    <th>Raza</th>
-                                    <th>Descripcion</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    lista.map((a, index) =>
-                                        <tr key={index}>
-                                            <td>{a.id}</td>
-                                            <td>{a.nombre}</td>
-                                            <td>{a.edad}</td>
-                                            <td>{a.sexo}</td>
-                                            <td>{a.especie}</td>
-                                            <td>{a.tamaño}</td>
-                                            <td>{a.raza}</td>
-                                            <td>{a.descripcion}</td>
-                                            <td>{a.url}</td>
-                                            <td><Button variant="success" onClick={() => modificar(a.id)}>Modificar</Button></td>
-                                            <td><Button variant="danger" onClick={() => eliminar(a.id, a.url)}>Eliminar</Button></td>
-                                        </tr>
-                                    )
-                                }
-
-                            </tbody>
-                        </Table>
-                    </div>
-            }    
+            </div> 
             
         </div>
         

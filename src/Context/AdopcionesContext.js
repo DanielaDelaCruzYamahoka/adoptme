@@ -12,7 +12,8 @@ export const AdopcionesContext = createContext();
 const AdopcionesProvider = (props) => {
     
     const username = cookies.get("username")
-
+    const email = cookies.get("email")
+    const [listausuarios, setlistausuarios]=useState([]);
     const [mensajes, setmensajes]=useState({
         id:'',
         msg:'',
@@ -69,6 +70,24 @@ const AdopcionesProvider = (props) => {
             setnotificaciones(listaAdopciones)
         })
     }, [])
+
+    useEffect(()=>{
+        firebase.database().ref('RegistroUsuarios').on('value', snapshot=>{
+            let listaUsuarios=[];
+            snapshot.forEach(row=>{
+                listaUsuarios.push({
+                    id:row.key,
+                    nombre:row.val().nombre,
+                    apellidoP:row.val().apellidoP,
+                    apellidoM:row.val().apellidoM,
+                    usuario:row.val().usuario,
+                    password:row.val().password,
+                    email:row.val().email
+                })
+            })
+            setlistausuarios(listaUsuarios)
+        })
+    },[])
 
     useEffect(() => {
         firebase.database().ref('Respuestas').on('value', snapshot => {
@@ -215,14 +234,26 @@ const AdopcionesProvider = (props) => {
     function eliminarsolicitud(idnoti){
         firebase.database().ref('Adopciones/'+idnoti).set(null).then(()=>{
         })
-        const temporal=lista.filter((a)=>a.id!==idnoti)
+        const temporal=notificaciones.filter((a)=>a.id!==idnoti)
         setnotificaciones(temporal)
         setShow2(false)
     }
     
         const [show, setShow] = useState(false);
         const [show2, setShow2] = useState(false);
+        const [mascotanombre, setmascotanombre]=useState()
+        const [mascotaurl, setmascotaurl]=useState()
 
+    function filtrarmascotas(idm){
+        let bmid=lista.filter((a,i)=>a.id===idm)
+        let nombrem, url;
+        bmid.map((a,i)=>(
+            nombrem=a.nombre,
+            url=a.url
+        ))
+        setmascotanombre(nombrem)
+        setmascotaurl(url)
+    } 
     function vernotificaciones(){
         let filtronoti=notificaciones.filter(a=>a.dueño===username)
         
@@ -237,14 +268,24 @@ const AdopcionesProvider = (props) => {
                     <Accordion.Body key={index}>
                         {a.msg}<br/>
                         <div style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
-                        <Button variant="primary" onClick={()=>{setShow(true); aceptarsolicitudguardar(a.adoptante, a.dueño, a.idmascota)}}>Aceptar</Button> 
+                        <Button variant="primary" onClick={()=>{
+                            setShow(true); 
+                            aceptarsolicitudguardar(a.adoptante, a.dueño, a.idmascota);
+                            filtrarmascotas(a.idmascota)}}>Aceptar</Button> 
                         <Button variant="danger" onClick={()=>{eliminarsolicitud()}}>Elimianr</Button>
                         </div>
                         <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>¿Quieres aceptar esta solicitud?</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
+                        <div>
+                            <h5>{mascotanombre}</h5>
+                            <img style={{maxWidth:'200px', maxHeight:'200px'}} src={mascotaurl}></img>                            
+                        </div>
+                        <div>
+                            <h5>Adoptante: {a.adoptante}</h5>
+                        </div>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" onClick={()=>aceptarsolicitud()}>
@@ -261,6 +302,7 @@ const AdopcionesProvider = (props) => {
                         <Modal.Title>¿Quieres eliminar esta solicitud?</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" onClick={()=>eliminarsolicitud(a.id)}>
@@ -280,13 +322,21 @@ const AdopcionesProvider = (props) => {
             </div>
 
         )
-
-        
-        
     }
 
+    const [show3, setShow3] = useState(false);
+    const [emaildueño, setemaildueño]=useState()
+    function filtrardueño(nombreusuario){
+        let bdueño=listausuarios.filter((a,i)=>a.usuario===nombreusuario)
+        let email;
+        bdueño.map((a,i)=>(
+            email=a.email
+        ))
+        setemaildueño(email)
+    }
     function verespuestas(){
         let filtrores=listarespuestas.filter(a=>a.adoptante===username)
+        const handleClose3 = () => setShow3(false);
         return(
             <div>
                 <Accordion >
@@ -297,12 +347,34 @@ const AdopcionesProvider = (props) => {
                         <Accordion.Body key={i}>
                             {a.res}
                             <div style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
-                            <Button variant="primary">Info</Button> 
+                            <Button variant="primary" onClick={()=>{setShow3(true);filtrarmascotas(a.idmascota);filtrardueño(a.dueño)}}>Info</Button> 
                             </div>
+
+                            <Modal show={show3} onHide={handleClose3}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Información para ponerte en contacto</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
+                                <div>
+                                    <h5>{mascotanombre}</h5>
+                                    <img style={{maxWidth:'200px', maxHeight:'200px'}} src={mascotaurl}></img>                            
+                                </div>
+                                <div>
+                                    <h5>Nombre del encargado: {a.dueño}</h5>
+                                    <h5>Contacto: {emaildueño}</h5>
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose3}>
+                                Aceptar
+                                </Button>
+                            </Modal.Footer>
+                            </Modal>
                         </Accordion.Body>
                     
                     )
                 }
+
                 </Accordion>
             </div>
         )
