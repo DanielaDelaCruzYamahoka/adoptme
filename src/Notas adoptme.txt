@@ -28,10 +28,10 @@ COSAS QUE HACER (Daniela)
 
 COSAS PARA VERIFICAR (Aracely)
 
--Cuando se elimina una mascota se elimina la tabla y se tiene que actualizar la página para que aparezca
+-(LISTO)Cuando se elimina una mascota se elimina la tabla y se tiene que actualizar la página para que aparezca
 -Se repitió código para mostrar mascotas en mi panel y en adoptar (ver alternativas)
--Crear una alerta para que detenga al usuario cuando suba una imagen y quiera ingresar los datos de la mascota
--Deshabilitar los campos o el botón de enviar si es que no se ha subido la imagen de la mascota
+-(LISTO:RESUELTO CON EL PUNTO DE ABAJO)Crear una alerta para que detenga al usuario cuando suba una imagen y quiera ingresar los datos de la mascota
+-(LISTO) Deshabilitar los campos o el botón de enviar si es que no se ha subido la imagen de la mascota
 -A las mascotas sig no se registaron con un usuario, volver a subirlas
 	+Miausito
 	+Maqui

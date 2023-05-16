@@ -38,7 +38,7 @@ const FirebaseProvider = (props) => {
         try {
             const result = await uploudFile(file)
             seturlimagen(result)
-            console.log(result)
+            
 
             if (result !== null) {
                 setimagencargada(true);
@@ -130,9 +130,13 @@ const FirebaseProvider = (props) => {
             setimagencargada(false);
             seturlimagen(null);
             setFile(undefined)
-            Swal.fire(
-                'Mascota registrada'
-            )
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Mascota registrada',
+                showConfirmButton: false,
+                timer: 1500
+            })
         }
     };
 
@@ -140,9 +144,15 @@ const FirebaseProvider = (props) => {
     const eliminar = async (id, url) => {
         try {
             firebase.database().ref('RegistroMascotas/' + id).set(null).then(() => {
-                alert('eliminado');
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Eliminado correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             })
-            const temporal = lista.filter((a) => a.id !== a.id)
+            const temporal = lista.filter((a) => a.id !== id)
             setlista(temporal)
             await deleteFile(url)//checar error (puede ser por internet lento)
         } catch (error) {
@@ -152,6 +162,8 @@ const FirebaseProvider = (props) => {
     }
 
     const modificar = (id) => {
+        
+        
         let listatemporall = lista.find((a) => a.id === id);
 
         setmascotas({

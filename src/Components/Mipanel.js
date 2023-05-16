@@ -72,6 +72,7 @@ function Mipanel(props) {
                         <InputGroup className="mb-3">
                                 <Form.Control type="file"
                                 name="url"
+                                placeholder="Ingresa la imagen"
                                 id="url"
                                 onChange={guardarImagen}
                                 />
