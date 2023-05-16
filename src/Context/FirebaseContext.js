@@ -38,9 +38,9 @@ const FirebaseProvider = (props) => {
         try {
             const result = await uploudFile(file)
             seturlimagen(result)
-            console.log(urlimagen)
+            console.log(result)
 
-            if (result !== " ") {
+            if (result !== null) {
                 setimagencargada(true);
                 Swal.fire(
                     'Imagen enviada',
@@ -87,7 +87,8 @@ const FirebaseProvider = (props) => {
     const manejoenvio = (e) => {
 
         e.preventDefault();
-
+        
+        
         const { id, nombre, edad, sexo, especie, tamaño, raza, descripcion, url, usuario } = mascotas;
 
         const vacios = (id.length === 0 && nombre.length === 0 && edad === "seleccione" && sexo === "seleccione" && tamaño === "seleccione" && raza.length === 0 && descripcion.length === 0 && url.length === 0) || especie === "seleccione"
@@ -127,7 +128,11 @@ const FirebaseProvider = (props) => {
                 usuario: ''
             })
             setimagencargada(false);
-            seturlimagen(null)
+            seturlimagen(null);
+            setFile(undefined)
+            Swal.fire(
+                'Mascota registrada'
+            )
         }
     };
 
@@ -534,6 +539,7 @@ const FirebaseProvider = (props) => {
                 handleSubmit,
                 urlimagen,
                 imagencargada,
+                file,
 
             }}>
             {props.children}

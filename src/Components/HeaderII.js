@@ -13,7 +13,7 @@ function HeaderII(props) {
           <Image className="logo" src={logo}/>
         </Link>
 
-        <nav className="Principal">
+        <div className="Principal">
           <Link to={"/Adoptar"}>
           <Form.Label>
             Adoptar
@@ -29,7 +29,7 @@ function HeaderII(props) {
           Mi panel
           </Form.Label>
           </Link>
-        </nav>
+        </div>
       </header>
 
       <section className="Presentacion">

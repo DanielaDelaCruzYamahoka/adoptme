@@ -1,13 +1,41 @@
-import { Button, Card, Dropdown, InputGroup, Form, Table } from 'react-bootstrap';
+import { Button, Card, Dropdown, InputGroup, Form, Table, Accordion} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
 import { useContext } from 'react';
 import { FirebaseContext } from '../Context/FirebaseContext';
+import { AdopcionesContext } from '../Context/AdopcionesContext';
+import notinueva from '../imagenes/notinueva.png'
+import './Mipanel.css'
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
+export const Nav = () => {
+    const [open, setOpen] = useState(false);
+    const {notificaciones, vernotificaciones, verespuestas}=useContext(AdopcionesContext)
+    
+
+    return (
+      <nav data-testid="nav" className={open ? "open" : null}>
+        <Button variant='light' className='botonoti'
+          onClick={() => {
+            setOpen(!open);
+          }}
+          data-testid="hamburger"
+        >
+          <img
+            src={notinueva}
+            alt="hamburger"
+          />
+        </Button>
+        <h5>Notificaciones</h5>
+        {vernotificaciones()}
+        {verespuestas()}
+      </nav>
+    );
+  };
+
 function Mipanel(props) {
-    const { lista, mascotas, manejoenvio, guardarImagen, eliminar, modificar, guardarCambios,handleSubmit,imagencargada } = useContext(FirebaseContext);
+    const { lista, mascotas, manejoenvio, guardarImagen, eliminar, modificar, guardarCambios,handleSubmit,imagencargada,file } = useContext(FirebaseContext);
     const nombre=cookies.get("nombre")
     const apellidoP=cookies.get("apellidoP")
     const apellidoM=cookies.get("apellidoM")
@@ -16,15 +44,23 @@ function Mipanel(props) {
         cookies.remove('username', {path:"/"})
         window.location.href='/Index'
     }
+
+    
+    
     return (
 
         <div>
+                <div className='container'>
+                <Nav/>
+                </div>            
             <div style={{display:"flex",justifyContent:"space-around", flexFlow:"row-wrap", alignItems:"stretch"}}>
                 <div style={{display:"flex", flexFlow:"column", alignItems:"center", padding:"15px"}} >
+
                     <h4>{nombre} {apellidoP} {apellidoM}</h4>
                     <p>{username}</p>
                     <Button className="mb-2" variant="outline-secondary">Información personal</Button>
-                    <Button className="mb-2" variant="outline-danger" onClick={()=>cerrarSesion()}>Cerrar Sesión</Button>                    
+                    <Button className="mb-2" variant="outline-danger" onClick={()=>cerrarSesion()}>Cerrar Sesión</Button>
+                                       
                 </div>
 
                 <Card>
@@ -39,7 +75,7 @@ function Mipanel(props) {
                                 id="url"
                                 onChange={guardarImagen}
                                 />
-                            <Button variant="primary" type="submit" onClick={handleSubmit}>
+                            <Button variant="primary" type="submit" disabled={!file} onClick={handleSubmit}>
                             Enviar imagen
                             </Button>
                         </InputGroup>
@@ -54,7 +90,7 @@ function Mipanel(props) {
                                 id="id"
                                 value={mascotas.id}
                                 onChange={guardarCambios}
-                                
+                                disabled={!imagencargada}
                             />
                         </InputGroup>
 
@@ -67,7 +103,7 @@ function Mipanel(props) {
                                 id="nombre"
                                 value={mascotas.nombre}
                                 onChange={guardarCambios}
-                                
+                                disabled={!imagencargada}
                             />
                         </InputGroup>
 
@@ -79,7 +115,7 @@ function Mipanel(props) {
                                 id="edad"
                                 value={mascotas.edad}
                                 onChange={guardarCambios}
-                                
+                                disabled={!imagencargada}
                                 >
                                 <option value="Seleccione">Seleccione</option>
                                 <option value="cachorro">Cachorro</option>
@@ -96,6 +132,7 @@ function Mipanel(props) {
                                 id="sexo"
                                 value={mascotas.sexo}
                                 onChange={guardarCambios}
+                                disabled={!imagencargada}
                                 >
                                 <option value="Seleccione">Seleccione</option>
                                 <option value="hembra">Hembra</option>
@@ -111,6 +148,7 @@ function Mipanel(props) {
                                 id="especie"
                                 value={mascotas.especie}
                                 onChange={guardarCambios}
+                                disabled={!imagencargada}
                                 >
                                 <option value="seleccione">Seleccione</option>
                                 <option value="perro">Perro</option>
@@ -126,6 +164,7 @@ function Mipanel(props) {
                                 id="tamaño"
                                 value={mascotas.tamaño}
                                 onChange={guardarCambios}
+                                disabled={!imagencargada}
                                 >
                                 <option value="seleccione">Seleccione</option>
                                 <option value="pequeño">Pequeño</option>
@@ -143,7 +182,7 @@ function Mipanel(props) {
                                 id="raza"
                                 value={mascotas.raza}
                                 onChange={guardarCambios}
-                                
+                                disabled={!imagencargada}
                             />
                         </InputGroup>
 
@@ -156,6 +195,7 @@ function Mipanel(props) {
                                 id="descripcion"
                                 value={mascotas.descripcion}
                                 onChange={guardarCambios}
+                                disabled={!imagencargada}
                                 
                             />
                         </InputGroup>

@@ -13,7 +13,7 @@ function Header(props) {
           <Image className="logo" src={logo}/>
         </Link>
 
-        <nav className="Principal">
+        <div className="Principal">
           <Link to={"/registro"} className="NavPrimary">
             <Form.Label >
             Registrarme
@@ -34,7 +34,7 @@ function Header(props) {
             Nosotros
           </Form.Label>
           </Link>
-        </nav>
+        </div>
       </header>
 
       <section className="Presentacion">

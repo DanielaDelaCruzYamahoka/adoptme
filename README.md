@@ -1,3 +1,49 @@
+INSTALACIONES PARA USAR ADOPTME
+
+npm install
+npm install firebase
+npm install sweetalert2
+npm i uuid
+npm i universal-cookie
+npm install @emailjs/browser --save
+
+LINKS PARA HACER CONTACTO
+https://github.com/erozog125/emailjs-2023/blob/main/src/ContactUs/ContactUS.jsx
+https://www.youtube.com/watch?v=Rro4-62fBkg
+
+COSAS QUE HACER (Daniela)
+-(LISTO)Poner otro header después del inicio de sesión
+-(LISTO)Cambiar los hipervinculos de los header correspondientes
+-(LISTO)Mostrar sólo las mascotas que registra cada usuario en mi panel
+-(LISTO)Mostrar todas las mascotas de todos los usuarios en Adoptar
+-(LISTO)Poner botón de adoptar en Adoptar (puede que un usuario adopte su propia mascota -verificar-)
+-Hacer la adopción
+	Ideas
+	+(LISTO)hacer solicitudes de adopción y que el usuario acepte las solicitudes, que den seguimiento ellos mismos
+	+(LISTO)si es que no se logra la adopción, se pueda eliminar la solicitud
+	+hacer un campo para que el usuario pueda habilitar o deshabilitar que se muestre la mascota en Adoptar
+	+Mostrar la info de aceptación de solicitud donde se muestran los datos de contacto donde ellos dan seguimiento
+-Hacer que funcione Contacto
+
+
+COSAS PARA VERIFICAR (Aracely)
+
+-Cuando se elimina una mascota se elimina la tabla y se tiene que actualizar la página para que aparezca
+-Se repitió código para mostrar mascotas en mi panel y en adoptar (ver alternativas)
+-Crear una alerta para que detenga al usuario cuando suba una imagen y quiera ingresar los datos de la mascota
+-Deshabilitar los campos o el botón de enviar si es que no se ha subido la imagen de la mascota
+-A las mascotas sig no se registaron con un usuario, volver a subirlas
+	+Miausito
+	+Maqui
+PALETA DE COLORES
+
+NORMAL- MÁS OSCURO(estos son los que más uso)
+CDB4DB- c59edb
+FFC8DD
+FFAFCC- ff98be
+BDE0FE
+A2D2FF- 8fc9ff
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
