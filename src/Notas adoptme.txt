@@ -43,3 +43,13 @@ FFC8DD
 FFAFCC- ff98be
 BDE0FE
 A2D2FF- 8fc9ff
+
+ULTIMOS CAMBIOS
+
+-Ponerle el estilo de adoptar en las cartas de mi panel
+-Dejar el baner solo con color (el color creo que quedaria mejor un azul mas clarito no?)
+-Si el boton de informacion personal no hace ninguna funcionalidad quitarlo y ponerlo como solo texto.
+-Trata de que en mi panel tambien aparescan las mascotas por default sino asi esta bien solo pon los botones de filtros en medio.
+-En contacto me falto ponerle una alerta que al picarle enviar diga correo enviado correctamente.
+-En las cartas de adopcion quita en descripcion lo que puse de las letras mayusculas.
+-Cuando no ha iniciado sesion lo de mascotas no seria mejor quitarlo si mostrara el de nosotros tambien?
