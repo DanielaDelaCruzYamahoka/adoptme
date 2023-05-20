@@ -4,10 +4,11 @@ import HeaderII from './HeaderII';
 import Navegacion from './Navegacion';
 import perroscontacto from '../perroscontacto.png'
 import './EstiloFormularios.css'
-import { Button, Card, Dropdown, InputGroup, Form, Table, Image } from 'react-bootstrap';
+import { Button, Card, InputGroup, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Contacto.css';
 import emailjs from '@emailjs/browser';
+import Swal from 'sweetalert2';
 
 function Contacto() {
 
@@ -21,8 +22,19 @@ function Contacto() {
 
         const apikey="uBitAKN8y8TYrdpBV";
         emailjs.sendForm(serviceId,templateId,refForm.current,apikey)
-        .then(result=> {console.log(result.text); refForm.current.reset()})
+        .then(result=> {
+            console.log(result.text); refForm.current.reset()
+            Swal.fire({
+                icon: 'success',
+                title: 'Tu mensaje ha sido enviado',
+                text: 'Espera tu respuesta muy pronto desde tu email :)',
+                showConfirmButton: false,
+                timer: 1500
+              })
+        })
         .catch(error=> console.log(error))
+
+
     }
 
     return (
@@ -32,7 +44,7 @@ function Contacto() {
                 texto2="Contacto"
             />
             <Navegacion
-                etiqueta={<a>Aquí van los links de navegacion</a>} />
+            />
             <div className='componen'>
                 <Card >
                     <Card.Body>
@@ -84,7 +96,7 @@ function Contacto() {
                             <InputGroup className="mb-3">
                                 <InputGroup.Text>Mensaje</InputGroup.Text>
                                 <Form.Control
-                                    type="text"
+                                    as="textarea"
                                     placeholder="Ingresa el mensaje que nos deseas transmitir"
                                     name="mensaje"
                                     id="mensaje"

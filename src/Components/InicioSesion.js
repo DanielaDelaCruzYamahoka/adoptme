@@ -17,7 +17,6 @@ function InicioSesion(props){
           />
           {/* en la sección de navegación se debe poner los liks para regresarse a las paginas anteriores */}
           <Navegacion
-          etiqueta={<a>Aquí van los links de navegacion</a>}
           />
     
           <main className='mainRegistro'>

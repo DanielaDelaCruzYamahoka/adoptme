@@ -1,6 +1,5 @@
 import React from 'react';
 import './Navegacion.css'
-import logo from '../logoadoptme.png'
 
 function Navegacion(props) {
   

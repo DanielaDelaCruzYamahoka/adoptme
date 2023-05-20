@@ -15,10 +15,11 @@ function Adoptar(){
                 texto2="Adoptar"
                 />
                 <Navegacion
-                    etiqueta={<a>Aquí van los links de navegacion</a>}
                 />
                 <br/>
                 <AdoptarMascotas/>
+                <br/>
+                <FooterIndex/>
             </div>            
 
             </AdopcionesProvider>

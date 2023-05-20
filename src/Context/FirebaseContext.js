@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { Button, Card, Dropdown, Modal } from 'react-bootstrap';
+import { Button, Card} from 'react-bootstrap';
 import firebase from '../Settings/ConfigFirebase.js'
 import { uploudFile, deleteFile } from '../Settings/ConfigFirebase.js';
 import Cookies from 'universal-cookie';
@@ -28,7 +28,7 @@ const FirebaseProvider = (props) => {
     })
 
     const [lista, setlista] = useState([]);
-    const [habilitado, sethabilitado] = useState(false);
+    const [mascotasusu, setmascotasusu]=useState([])
     //useState para imagen
     const [file, setFile] = useState(null)
     const [urlimagen, seturlimagen] = useState(null)
@@ -77,6 +77,8 @@ const FirebaseProvider = (props) => {
                 })
             })
             setlista(listaMascotas)
+            let bmas=listaMascotas.filter((a,i)=>a.usuario===username)
+            setmascotasusu(bmas)
         })
     }, [])
     //funciones
@@ -307,10 +309,11 @@ const FirebaseProvider = (props) => {
     const [modalShow, setModalShow] = useState();
     //Perfil de la mascota
     const [mascotaperfil, setMascotaPerfil] = useState([]);
-
+    
+    
     function botonfiltros() {
         let mascotasusuario = lista.filter((a, i) => a.usuario === username)
-        sethabilitado(true)
+        
 
         setMascotasFiltradas({
             ...mascotasFiltradas
@@ -319,17 +322,15 @@ const FirebaseProvider = (props) => {
         if (mascotasFiltradas !== 0) {
             // Generar tarjetas
             const tarjetas = mascotasFiltradas.map((mascota, index) => (
-                <Card key={index} className="card" style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={mascota.url} />
-                    <Card.Body>
+                <Card key={index} className="cardt2" >
+                    <Card.Img variant="top" className='cardimg' src={mascota.url} />
+                    <Card.Body className='cardBody'>
                         <Card.Title>{mascota.nombre}</Card.Title>
                         <Card.Text>
-                            {mascota.especie}<br />
-                            {mascota.edad} <br />
-                            {mascota.tamaño} <br />
-                            {mascota.sexo}
+                        Edad: {mascota.edad} <br />
+                        Sexo: {mascota.sexo}
                         </Card.Text>
-                        <Button variant="primary" onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                        <Button variant="primary" style={{ backgroundColor: '#c59edb', border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
                     </Card.Body>
                 </Card>
             ));
@@ -337,17 +338,15 @@ const FirebaseProvider = (props) => {
         }
         else {
             const tarjetas = mascotasusuario.map((mascota, index) => (
-                <Card key={index} className="card" style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={mascota.url} />
-                    <Card.Body>
+                <Card key={index} className="cardt2">
+                    <Card.Img variant="top" className='cardimg' src={mascota.url} />
+                    <Card.Body className='cardBody'>
                         <Card.Title>{mascota.nombre}</Card.Title>
                         <Card.Text>
-                            {mascota.especie}<br />
-                            {mascota.edad} <br />
-                            {mascota.tamaño} <br />
-                            {mascota.sexo}
+                            Edad: {mascota.edad} <br />
+                            Sexo: {mascota.sexo}
                         </Card.Text>
-                        <Button variant="primary" onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
+                        <Button variant="primary" style={{ backgroundColor: '#c59edb', border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); }}>Perfil</Button>
                     </Card.Body>
                 </Card>
             ));
@@ -529,6 +528,7 @@ const FirebaseProvider = (props) => {
                 modalShow,
                 setModalShow,
                 setMascotaPerfil,
+                tarjetassexo,
 
                 tarjetasmascotas2,
                 tarjetasmascotastamaño2,
@@ -552,7 +552,7 @@ const FirebaseProvider = (props) => {
                 urlimagen,
                 imagencargada,
                 file,
-
+                mascotasusu
             }}>
             {props.children}
 

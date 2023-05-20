@@ -3,7 +3,7 @@ import './BodyIndex.css'
 import perro1 from '../istock.jpg'
 import perro2 from '../GoldenRetriever.jpg'
 import gato1 from '../Gato.jpg'
-import {Button, Card, Dropdown, InputGroup, Form, Table} from 'react-bootstrap/';
+import {Card} from 'react-bootstrap/';
 function BodyIndex() {
   return (
     <section>

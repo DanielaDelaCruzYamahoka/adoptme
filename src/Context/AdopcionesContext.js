@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
-import { Button, FormGroup, Modal, Accordion } from 'react-bootstrap';
+import { Button,  Modal, Accordion } from 'react-bootstrap';
 import firebase from '../Settings/ConfigFirebase.js'
-import { uploudFile, deleteFile } from '../Settings/ConfigFirebase.js';
 import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -12,7 +11,6 @@ export const AdopcionesContext = createContext();
 const AdopcionesProvider = (props) => {
     
     const username = cookies.get("username")
-    const email = cookies.get("email")
     const [listausuarios, setlistausuarios]=useState([]);
     const [mensajes, setmensajes]=useState({
         id:'',
@@ -118,9 +116,8 @@ const AdopcionesProvider = (props) => {
     }
     
     function botonadoptar(){
-        const {id, msg, adoptante, dueño, idmascota}=mensajes;
-        console.log(mensajes)
-
+        const {id, adoptante, dueño, idmascota}=mensajes;
+        
         let existeadopcion=notificaciones.find(a=>a.adoptante===adoptante && a.idmascota===idmascota)
         console.log(existeadopcion)
 
@@ -199,7 +196,6 @@ const AdopcionesProvider = (props) => {
     function aceptarsolicitudguardar(adoptantemascota, dueñomascota, idmas){
         let respu=dueñomascota + " aceptó tu solicitud"
         let contador = listarespuestas.length +1
-        
         setrespuestas({
             id:contador,
             res:respu,
@@ -207,11 +203,10 @@ const AdopcionesProvider = (props) => {
             dueño: dueñomascota,
             idmascota: idmas
           })
-          console.log(respuestas)
     }
     
     function aceptarsolicitud(){
-        const {id, res, adoptante, dueño, idmascota}=respuestas;
+        const {id}=respuestas;
         
         firebase.database().ref('Respuestas/'+id).update(respuestas).then(()=>{
         })  
@@ -232,33 +227,51 @@ const AdopcionesProvider = (props) => {
     }
 
     function eliminarsolicitud(idnoti){
-        firebase.database().ref('Adopciones/'+idnoti).set(null).then(()=>{
-        })
-        const temporal=notificaciones.filter((a)=>a.id!==idnoti)
-        setnotificaciones(temporal)
-        setShow2(false)
+        
+        Swal.fire({
+            title: '¿Quieres eliminnar esta solicitud?',
+            showDenyButton: true,
+            showCancelButton: true,
+            showConfirmButton: false,
+            denyButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isDenied) {
+                firebase.database().ref('Adopciones/'+idnoti).set(null).then(()=>{
+                })
+                const temporal=notificaciones.filter((a)=>a.id!==idnoti)
+                setnotificaciones(temporal)
+               
+            }
+          })
+        
     }
     
         const [show, setShow] = useState(false);
-        const [show2, setShow2] = useState(false);
         const [mascotanombre, setmascotanombre]=useState()
         const [mascotaurl, setmascotaurl]=useState()
+        const [adoptantenombre, setadoptantenombre]=useState()
 
-    function filtrarmascotas(idm){
+    function filtrarmascotas(idm, idn){
         let bmid=lista.filter((a,i)=>a.id===idm)
-        let nombrem, url;
-        bmid.map((a,i)=>(
+        let bnotid= notificaciones.filter((a,i)=>a.id===idn)
+        let nombrem, url, nombrea;
+        bmid.map((a)=>(
             nombrem=a.nombre,
             url=a.url
         ))
+        bnotid.map((a)=>
+            nombrea=a.adoptante
+        )
         setmascotanombre(nombrem)
         setmascotaurl(url)
+        setadoptantenombre(nombrea)
     } 
     function vernotificaciones(){
         let filtronoti=notificaciones.filter(a=>a.dueño===username)
         
         const handleClose = () => setShow(false);
-        const handleClose2 = () => setShow2(false);
         return(
             <div>
                 <Accordion >
@@ -271,8 +284,9 @@ const AdopcionesProvider = (props) => {
                         <Button variant="primary" onClick={()=>{
                             setShow(true); 
                             aceptarsolicitudguardar(a.adoptante, a.dueño, a.idmascota);
-                            filtrarmascotas(a.idmascota)}}>Aceptar</Button> 
-                        <Button variant="danger" onClick={()=>{eliminarsolicitud()}}>Elimianr</Button>
+                            filtrarmascotas(a.idmascota, a.id);
+                            }}>Aceptar</Button> 
+                        <Button variant="danger" onClick={()=>{eliminarsolicitud(a.id)}}>Eliminar</Button>
                         </div>
                         <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
@@ -284,7 +298,7 @@ const AdopcionesProvider = (props) => {
                             <img style={{maxWidth:'200px', maxHeight:'200px'}} src={mascotaurl}></img>                            
                         </div>
                         <div>
-                            <h5>Adoptante: {a.adoptante}</h5>
+                            <h5>Adoptante: {adoptantenombre}</h5>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
@@ -292,23 +306,6 @@ const AdopcionesProvider = (props) => {
                         Confirmar
                         </Button>
                         <Button variant="secondary" onClick={handleClose}>
-                        Cancelar
-                        </Button>
-                    </Modal.Footer>
-                    </Modal>
-
-                    <Modal show={show2} onHide={handleClose2}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>¿Quieres eliminar esta solicitud?</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="primary" onClick={()=>eliminarsolicitud(a.id)}>
-                        Confirmar
-                        </Button>
-                        <Button variant="secondary" onClick={handleClose2}>
                         Cancelar
                         </Button>
                     </Modal.Footer>
@@ -350,18 +347,18 @@ const AdopcionesProvider = (props) => {
                             <Button variant="primary" onClick={()=>{setShow3(true);filtrarmascotas(a.idmascota);filtrardueño(a.dueño)}}>Info</Button> 
                             </div>
 
-                            <Modal show={show3} onHide={handleClose3}>
+                            <Modal show={show3} onHide={handleClose3} size="lg" centered>
                             <Modal.Header closeButton>
                                 <Modal.Title>Información para ponerte en contacto</Modal.Title>
                             </Modal.Header>
-                            <Modal.Body style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
+                            <Modal.Body style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
                                 <div>
                                     <h5>{mascotanombre}</h5>
                                     <img style={{maxWidth:'200px', maxHeight:'200px'}} src={mascotaurl}></img>                            
                                 </div>
                                 <div>
-                                    <h5>Nombre del encargado: {a.dueño}</h5>
-                                    <h5>Contacto: {emaildueño}</h5>
+                                    <h6>Nombre del encargado: {a.dueño}</h6>
+                                    <h6>Contacto: {emaildueño}</h6>
                                 </div>
                             </Modal.Body>
                             <Modal.Footer>

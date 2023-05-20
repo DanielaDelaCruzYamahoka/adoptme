@@ -1,22 +1,18 @@
 import { Button, Card, Dropdown, Modal } from 'react-bootstrap';
 import { useContext} from 'react';
 import { FirebaseContext } from '../Context/FirebaseContext';
-import { AdopcionesContext } from '../Context/AdopcionesContext';
 import './AdoptarMascotas.css'
 
-
-
-function AdoptarMascotas() {
-  const {botonadoptar, guardarmensaje}=useContext(AdopcionesContext);
+function MascotasNAM() {
   const { tarjetasmascotas2, modalShow, setModalShow,
     especieSeleccionada, edadSeleccionada, TamañoSeleccionada,
     SexoSeleccionada, tarjetasmascotasedad2, botonfiltros2,
     tarjetasfinales, tarjetasmascotastamaño2, tarjetasmascotassexo2, mascotaperfil,
     lista,setMascotaPerfil } = useContext(FirebaseContext);
-    
   
   return (
-    <div>
+
+        <div>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
         <h2>Encuentra a tu nuevo compañero</h2>
       </div>
@@ -84,7 +80,7 @@ function AdoptarMascotas() {
                     <Card.Text>
                         Raza: {mascota.raza}
                     </Card.Text>
-                    <Button variant="primary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota); guardarmensaje(mascota.nombre, mascota.usuario, mascota.id)}}>Perfil</Button>
+                    <Button variant="primary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => { setModalShow(true); setMascotaPerfil(mascota);}}>Perfil</Button>
 
                 </Card.Body>
             </Card>
@@ -120,8 +116,6 @@ function AdoptarMascotas() {
                 <Button variant="secondary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={() => {setModalShow(false)}}>
                   Cerrar
                 </Button>
-                <Button variant="primary" style={{ backgroundColor: '#c59edb',border: 'none' }} onClick={()=>botonadoptar()}>Adoptar</Button>
-
               </Modal.Footer>
             </Modal>
           </div>
@@ -129,7 +123,8 @@ function AdoptarMascotas() {
       </div>
     </div>
 
+
   )
 }
 
-export default AdoptarMascotas;
+export default MascotasNAM;

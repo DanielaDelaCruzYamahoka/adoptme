@@ -8,7 +8,6 @@ function Header(props) {
   return (
     <section>
       <header className="navbar" >
-        
         <Link to={"/Index"}>
           <Image className="logo" src={logo}/>
         </Link>
@@ -24,7 +23,7 @@ function Header(props) {
             Iniciar Sesión
           </Form.Label>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/Mascotas"}>
           <Form.Label>
             Mascotas
           </Form.Label> 
@@ -43,6 +42,10 @@ function Header(props) {
         <h1>{props.texto2}</h1>
         <p>No compres la felicidad, adopta</p>
       </section>
+
+      <div className="navHorizontal">
+        <br/>
+      </div>
     </section>
   );
 }

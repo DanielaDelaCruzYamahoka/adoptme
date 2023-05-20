@@ -1,4 +1,4 @@
-import { Button, Card, Dropdown, InputGroup, Form, Table, Accordion} from 'react-bootstrap';
+import { Button, Card,InputGroup, Form} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
 import { useContext } from 'react';
@@ -11,7 +11,7 @@ const cookies = new Cookies();
 
 export const Nav = () => {
     const [open, setOpen] = useState(false);
-    const {notificaciones, vernotificaciones, verespuestas}=useContext(AdopcionesContext)
+    const { vernotificaciones, verespuestas}=useContext(AdopcionesContext)
     
 
     return (
@@ -35,7 +35,7 @@ export const Nav = () => {
   };
 
 function Mipanel(props) {
-    const { lista, mascotas, manejoenvio, guardarImagen, eliminar, modificar, guardarCambios,handleSubmit,imagencargada,file } = useContext(FirebaseContext);
+    const { mascotas, manejoenvio, guardarImagen, guardarCambios,handleSubmit,imagencargada,file } = useContext(FirebaseContext);
     const nombre=cookies.get("nombre")
     const apellidoP=cookies.get("apellidoP")
     const apellidoM=cookies.get("apellidoM")
@@ -55,10 +55,12 @@ function Mipanel(props) {
                 </div>            
             <div style={{display:"flex",justifyContent:"space-around", flexFlow:"row-wrap", alignItems:"stretch"}}>
                 <div style={{display:"flex", flexFlow:"column", alignItems:"center", padding:"15px"}} >
-
-                    <h4>{nombre} {apellidoP} {apellidoM}</h4>
+                    <div style={{ color:"#595959"}}>
+                        Información personal</div>
+                    <h4>{nombre}</h4>
+                    <h4>{apellidoP} {apellidoM}</h4>
                     <p>{username}</p>
-                    <Button className="mb-2" variant="outline-secondary">Información personal</Button>
+                    
                     <Button className="mb-2" variant="outline-danger" onClick={()=>cerrarSesion()}>Cerrar Sesión</Button>
                                        
                 </div>

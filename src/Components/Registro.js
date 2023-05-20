@@ -14,7 +14,7 @@ function Registro(props) {
       texto1="Únete a la comunidad"
       texto2="Registro"
       />
-
+      <Navegacion/>
       <main className='mainRegistro'>
       <br/>
       <h4>Escribe tus datos para registrarte y encontrar a tu futura mascota.</h4>
